@@ -1,0 +1,363 @@
+#shoutbox-inner {
+  margin: 10px;
+  height: 300px;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: scroll;
+  background: lightblue; }
+
+.icon-bar:first-of-type:before {
+  content: "Categories";
+  color: white;
+  position: relative;
+  left: -120px;
+  top: -8px;
+  font-size: 3vw;
+  font-family: "Denk One"; }
+
+.loader {
+  border: 10px solid white;
+  border-top: 10px solid cornflowerblue;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-animation: spin 1s ease-in-out infinite;
+          animation: spin 1s ease-in-out infinite;
+  opacity: 1;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s; }
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+#shoutboxForm {
+  width: 100%; }
+  #shoutboxForm div {
+    text-align: center; }
+  #shoutboxForm input {
+    display: inline-block;
+    width: 40%; }
+
+footer {
+  color: white;
+  font-family: "Denk One"; }
+
+.modal-footer p {
+  margin: 10px 0 10px; }
+
+.shout {
+  background-color: cornflowerblue;
+  border: 5px solid cornflowerblue;
+  border-radius: 5px;
+  color: white;
+  font-family: "Denk One";
+  margin: 5px;
+  padding: 5px; }
+
+#firebaseui-auth-container {
+  display: none; }
+
+#contactForm p {
+  color: black; }
+
+.alert-success {
+  color: cornflowerblue; }
+
+.alert-danger {
+  color: cornflowerblue; }
+
+.tab-pane, .tab-pane.active {
+  background-color: lightblue;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left; }
+
+.panel {
+  border: none;
+  background-color: lightblue; }
+
+.icon-bar {
+  background-color: white; }
+
+.board-container {
+  background-color: lightblue;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left; }
+
+.board-title {
+  background-color: cornflowerblue;
+  border-radius: 0px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  font-family: "Denk One"; }
+
+.nav-tabs.nav-justified > li > a {
+  background-color: lightblue;
+  border: none;
+  border-bottom: 2px solid cornflowerblue; }
+
+.nav-tabs.nav-justified > li.active > a, .nav-tabs.nav-justified > li.active:hover > a, .nav-tabs.nav-justified > .active > a, .nav-tabs.nav-justified > .active > a:focus, .nav-tabs.nav-justified > .active > a:hover {
+  background-color: cornflowerblue;
+  border-radius: 0px;
+  color: white;
+  font-family: "Denk One";
+  border: none;
+  border-bottom: 2px solid cornflowerblue;
+  outline: 0; }
+
+.nav-tabs li a {
+  color: white;
+  font-family: "Denk One"; }
+
+footer {
+  position: relative;
+  bottom: 0;
+  text-align: center;
+  margin-top: 50px; }
+
+.add-button {
+  float: right;
+  background-color: white;
+  color: cornflowerblue;
+  font-weight: bolder;
+  border-radius: 5px;
+  border: none;
+  font-size: 20px; }
+
+.add-button:hover {
+  border: 5px solid lightblue; }
+
+.board-item {
+  background-color: cornflowerblue;
+  border-radius: 5px;
+  width: calc(25% - 20px);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  height: 100px;
+  margin: 10px;
+  text-align: center;
+  color: white;
+  font-family: "Denk One"; }
+
+.board-item h4 {
+  text-decoration: underline;
+  margin-top: 10px;
+  margin-bottom: 5px; }
+
+.board-item p {
+  margin-top: 5px;
+  padding-top: 0px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: left;
+  line-height: 1.5em;
+  height: 3em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.board-item h4, .modal h2 {
+  padding: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.board-item:hover {
+  border: 5px solid cornflowerblue; }
+
+.-sticky0, .-sticky1, .-stikcy2, .-sticky3 {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 2px solid white; }
+
+.modal, .sticky {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */ }
+
+/* Modal Header */
+.modal-header {
+  padding: 2px 16px;
+  background-color: cornflowerblue;
+  color: white; }
+
+/* Modal Body */
+.modal-body {
+  padding: 2px 16px;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+/* Modal Footer */
+.modal-footer {
+  padding: 2px 16px;
+  background-color: cornflowerblue;
+  color: white;
+  font-style: italic;
+  padding-bottom: 5px; }
+
+/* Modal Content */
+.modal-content {
+  margin: 10% auto;
+  /* 15% from the top and centered */
+  padding: 0px;
+  position: relative;
+  background-color: #fefefe;
+  border: none;
+  width: calc(90% / 2);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s; }
+
+/* The Close Button */
+.close {
+  float: right;
+  font-size: 28px;
+  font-weight: bold; }
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer; }
+
+#close {
+  float: right; }
+
+.modal#modal-input .modal-content {
+  margin: 5% auto; }
+
+.modal#modal-input .modal-content {
+  border: 10px solid cornflowerblue;
+  border-radius: 10px; }
+
+.modal#modal-input .modal-content .modal-header {
+  background-color: lightblue; }
+
+.delete {
+  font-weight: bold;
+  color: darkred; }
+
+#contactForm > div > div {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto; }
+
+input, textarea {
+  width: 100%; }
+
+#submit {
+  width: auto;
+  margin-top: 5px;
+  font-weight: bold;
+  padding: 10px;
+  color: white;
+  background-color: lightblue; }
+
+#modal-input > div > div.modal-footer {
+  background-color: lightblue; }
+
+#alert {
+  text-align: center; }
+
+#myCaptcha div {
+  margin-left: auto;
+  margin-right: auto; }
+
+.panel {
+  width: 100%; }
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0; }
+  to {
+    top: 0;
+    opacity: 1; } }
+
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0; }
+  to {
+    top: 0;
+    opacity: 1; } }
+
+@media only screen and (max-width: 1200px) {
+  .board-item {
+    width: calc(33.3333% - 20px); } }
+
+@media only screen and (max-width: 992px) {
+  .board-item {
+    width: calc(50% - 20px); }
+  .modal-content {
+    width: 50%; } }
+
+@media only screen and (max-width: 768px) {
+  .board-item {
+    width: 100%; }
+  .modal-content {
+    width: 75%; } }
