@@ -11,6 +11,7 @@ class App extends React.Component {
       loaded: false,
       whoId: null,
       whoName: "anonymous",
+      showLogin: false,
       now: Date.now(),
       expiration: 24,
       refShoutbox: "",
@@ -18,6 +19,7 @@ class App extends React.Component {
       firebase: global.firebase,
       firebaseui: global.firebaseui
     };
+    this.initLogin =  this.initLogin.bind(this);
 
   }
 
@@ -54,6 +56,80 @@ class App extends React.Component {
         .endAt(deadline)
     });
   }
+
+  initLogin() {
+    let firebase = this.state.firebase; 
+
+    firebase.auth().onAuthStateChanged(
+        (user) => {
+
+
+            if (user) {
+                /* user is signed in */
+                this.setState({
+                whoId: user.uid,
+                whoName: user.displayName
+                });
+                let displayName = user.displayName;
+                let uid = user.uid;
+                user.getToken().then(function(accessToken) {
+                    document.getElementById("sign-in-status").textContent =
+                        "Signed in as " + displayName;
+                    document.getElementById("sign-in").textContent = "Sign out";
+                    document.querySelector("#contactForm p").textContent =
+                        "Adding entry as " +
+                        displayName +
+                        ", or specify below:";
+                });
+            } else {
+                /* user is signed out */
+                this.setState({
+                whoName: "anonymous"
+              });
+                document.getElementById("sign-in-status").textContent =
+                    "Signed out";
+                document.getElementById("sign-in").textContent = "Sign in";
+            }
+        },
+        (error) => {
+            console.log(error);
+        }
+    );
+};
+
+/* show or hide log options */
+showLoginOptions() {
+    if (
+        document.getElementById("sign-in").textContent === "Sign out" &&
+        this.state.whoName !== "anonymous"
+    ) {
+        document.querySelector("#contactForm p").textContent =
+            "Adding entry as anonymous, or specify below:";
+            let firebase = this.state.firebase; 
+        firebase.auth().signOut();
+        //wipedeleteEntryButton();
+        console.log(this.state);
+         this.setState({
+        whoId: null,
+        whoName: null
+      });
+    }
+
+    if (this.state.showLogin === false) {
+        document.getElementById("firebaseui-auth-container").style.display =
+            "block";
+             this.setState({
+        showLogin: true
+      });
+    } else if (this.state.showLogin === true) {
+        document.getElementById("firebaseui-auth-container").style.display =
+            "none";
+             this.setState({
+        showLogin: false
+      });
+    }
+};
+
 
   purgeOldDatabaseDataAndDrawNew(name, ref) {
     let deleted = 0;
@@ -111,6 +187,9 @@ class App extends React.Component {
       document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
 
       this.hideProgress();
+      this.showLoginOptions();
+      this.initLogin();
+      
     });
   }
 
