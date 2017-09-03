@@ -1,10 +1,10 @@
 #shoutbox-inner {
   margin: 10px;
-  height: 300px;
+  height: 100%;
   width: 100%;
   max-height: 300px;
   overflow-y: scroll;
-  background: lightblue; }
+  background: steelblue; }
 
 .icon-bar:first-of-type:before {
   content: "Categories";
@@ -17,7 +17,7 @@
 
 .loader {
   border: 10px solid white;
-  border-top: 10px solid cornflowerblue;
+  border-top: 10px solid navy;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -46,12 +46,15 @@
             transform: rotate(360deg); } }
 
 #shoutboxForm {
-  width: 100%; }
-  #shoutboxForm div {
-    text-align: center; }
+  width: 100%;
+  padding:  10px; }
   #shoutboxForm input {
     display: inline-block;
-    width: 40%; }
+    width: 40%; 
+    color: navy;}
+    #shoutboxForm input, #shoutboxForm select, #shoutboxForm textarea{
+    color: navy;
+}
 
 footer {
   color: white;
@@ -61,13 +64,22 @@ footer {
   margin: 10px 0 10px; }
 
 .shout {
-  background-color: cornflowerblue;
-  border: 5px solid cornflowerblue;
-  border-radius: 5px;
+  background-color: navy;
+  border: 5px solid navy;
+  border-radius: 15px;
   color: white;
   font-family: "Denk One";
   margin: 5px;
-  padding: 5px; }
+  padding: 5px;
+    margin-right: 0px;
+    text-align: right;
+    margin: 5px;
+        float: right;
+    clear: both; }
+
+.shout h1 {
+  margin-top: 5px;
+}
 
 #firebaseui-auth-container {
   display: none; }
@@ -76,13 +88,13 @@ footer {
   color: black; }
 
 .alert-success {
-  color: cornflowerblue; }
+  color: navy; }
 
 .alert-danger {
-  color: cornflowerblue; }
+  color: navy; }
 
 .tab-pane, .tab-pane.active {
-  background-color: lightblue;
+  background-color: steelblue;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -98,13 +110,13 @@ footer {
 
 .panel {
   border: none;
-  background-color: lightblue; }
+  background-color: steelblue; }
 
 .icon-bar {
   background-color: white; }
 
 .board-container {
-  background-color: lightblue;
+  background-color: steelblue;
   border-radius: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -120,7 +132,7 @@ footer {
           justify-content: left; }
 
 .board-title {
-  background-color: cornflowerblue;
+  background-color: navy;
   border-radius: 0px;
   width: 100%;
   -webkit-box-sizing: border-box;
@@ -132,17 +144,17 @@ footer {
   font-family: "Denk One"; }
 
 .nav-tabs.nav-justified > li > a {
-  background-color: lightblue;
+  background-color: steelblue;
   border: none;
-  border-bottom: 2px solid cornflowerblue; }
+  border-bottom: 2px solid navy; }
 
 .nav-tabs.nav-justified > li.active > a, .nav-tabs.nav-justified > li.active:hover > a, .nav-tabs.nav-justified > .active > a, .nav-tabs.nav-justified > .active > a:focus, .nav-tabs.nav-justified > .active > a:hover {
-  background-color: cornflowerblue;
+  background-color: navy;
   border-radius: 0px;
   color: white;
   font-family: "Denk One";
   border: none;
-  border-bottom: 2px solid cornflowerblue;
+  border-bottom: 2px solid navy;
   outline: 0; }
 
 .nav-tabs li a {
@@ -158,17 +170,17 @@ footer {
 .add-button {
   float: right;
   background-color: white;
-  color: cornflowerblue;
+  color: navy;
   font-weight: bolder;
   border-radius: 5px;
   border: none;
   font-size: 20px; }
 
 .add-button:hover {
-  border: 5px solid lightblue; }
+  border: 5px solid steelblue; }
 
 .board-item {
-  background-color: cornflowerblue;
+  background-color: navy;
   border-radius: 5px;
   width: calc(25% - 20px);
   -webkit-box-sizing: border-box;
@@ -208,7 +220,7 @@ footer {
   text-overflow: ellipsis; }
 
 .board-item:hover {
-  border: 5px solid cornflowerblue; }
+  border: 5px solid navy; }
 
 .-sticky0, .-sticky1, .-stikcy2, .-sticky3 {
   -webkit-box-sizing: border-box;
@@ -238,7 +250,7 @@ footer {
 /* Modal Header */
 .modal-header {
   padding: 2px 16px;
-  background-color: cornflowerblue;
+  background-color: navy;
   color: white; }
 
 /* Modal Body */
@@ -250,7 +262,7 @@ footer {
 /* Modal Footer */
 .modal-footer {
   padding: 2px 16px;
-  background-color: cornflowerblue;
+  background-color: navy;
   color: white;
   font-style: italic;
   padding-bottom: 5px; }
@@ -290,11 +302,11 @@ footer {
   margin: 5% auto; }
 
 .modal#modal-input .modal-content {
-  border: 10px solid cornflowerblue;
+  border: 10px solid navy;
   border-radius: 10px; }
 
 .modal#modal-input .modal-content .modal-header {
-  background-color: lightblue; }
+  background-color: steelblue; }
 
 .delete {
   font-weight: bold;
@@ -314,10 +326,10 @@ input, textarea {
   font-weight: bold;
   padding: 10px;
   color: white;
-  background-color: lightblue; }
+  background-color: steelblue; }
 
 #modal-input > div > div.modal-footer {
-  background-color: lightblue; }
+  background-color: steelblue; }
 
 #alert {
   text-align: center; }

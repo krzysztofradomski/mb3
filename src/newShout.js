@@ -48,7 +48,7 @@ class Shout extends React.Component {
             className="form-control required"
             id="shout"
             name="shout"
-            placeholder="start typing to enable realtime"
+            placeholder="type here"
             value={this.state.shout}
             onChange={this.handleChange.bind(this)}
             required
