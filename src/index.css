@@ -82,7 +82,7 @@ footer {
 }
 
 #firebaseui-auth-container {
-  display: none; }
+  display: block; }
 
 #contactForm p {
   color: black; }

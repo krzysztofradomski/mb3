@@ -3,6 +3,7 @@ import './App.css';
 import Shout from './newShout';
 //import configBase from './configBase';
 import LogHere from './logHere';
+import firebaseConfig from './firebaseConfig'
 
 class App extends React.Component {
     constructor() {
@@ -11,8 +12,9 @@ class App extends React.Component {
             listOfShouts: [],
             loaded: false,
             whoId: null,
-            whoName: null,
+            whoName: 'anonymous',
             showLogin: false,
+            login: 'Signed out',
             now: Date.now(),
             expiration: 24,
             refShoutbox: "",
@@ -20,28 +22,13 @@ class App extends React.Component {
             firebase: global.firebase,
             firebaseui: global.firebaseui
         };
-        //this.initLogin = this.initLogin.bind(this); ???
-
     }
 
     configBase() {
-        let config = {
-            apiKey: "AIzaSyANmT2lWop_rbnLuXcl2V13Izjg3H3ybaY",
-            authDomain: "messageboard1-6c745.firebaseapp.com",
-            databaseURL: "https://messageboard1-6c745.firebaseio.com",
-            projectId: "messageboard1-6c745",
-            storageBucket: "messageboard1-6c745.appspot.com",
-            messagingSenderId: "515471374408"
-        };
+        let config = firebaseConfig.base;
         let firebase = this.state.firebase;
         firebase.initializeApp(config);
-        let uiConfig = {
-            signInSuccessUrl: "http://localhost:3000/",
-            signInOptions: [
-                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-                firebase.auth.EmailAuthProvider.PROVIDER_ID
-            ]
-        };
+        let uiConfig = firebaseConfig.ui;
         /* initialize firebase auth */
         const ui = new this.state.firebaseui.auth.AuthUI(
             this.state.firebase.auth()
@@ -71,18 +58,26 @@ class App extends React.Component {
                     let displayName = user.displayName;
                     let uid = user.uid;
                     user.getIdToken().then( (accessToken) => {
-                        document.getElementById("sign-in-status").textContent = `Signed in as ${displayName}`;
-                        document.getElementById("sign-in").textContent = "Sign out";
+                        //document.getElementById("sign-in-status").textContent = `Signed in as ${displayName}`;
+                        //document.getElementById("sign-in").textContent = "Sign out";
                         //document.querySelector("#contactForm p").textContent = "Adding entry as " + displayName + ", or specify below:";
+                       this.setState({
+                        login:`Signed in as ${displayName}`
                     });
-                } else {
-                    /* user is signed out */
+                    });
+                }  else {
+                    /* user is signed out
                     this.setState({
                         whoName: "anonymous"
                     });
                     document.getElementById("sign-in-status").textContent =
                         "Signed out";
-                    document.getElementById("sign-in").textContent = "Sign in";
+                    document.getElementById("sign-in").textContent = "Sign in"; */
+                     this.setState({
+                        login: 'Signed out',
+                        whoId: null,  
+                        whoName: 'anonymous'
+                    });
                 }
             },
             (error) => {
@@ -91,10 +86,11 @@ class App extends React.Component {
         );
     };
 
+
     /* show or hide log options */
     showLoginOptions() {
         if (
-            document.getElementById("sign-in").textContent === "Sign out" &&
+            this.state.whoId === null ||
             this.state.whoName !== "anonymous"
         ) {
             //document.querySelector("#contactForm p").textContent = "Adding entry as anonymous, or specify below:";
@@ -103,16 +99,16 @@ class App extends React.Component {
             //wipedeleteEntryButton();
             this.setState({
                 whoId: null,
-                whoName: null
+                whoName: 'anonymous'
             });
         }
         if (this.state.showLogin === false) {
-            document.getElementById("firebaseui-auth-container").style.display = "block";
+            //document.getElementById("firebaseui-auth-container").style.display = "block";
             this.setState({
                 showLogin: true
             });
         } else if (this.state.showLogin === true) {
-            document.getElementById("firebaseui-auth-container").style.display = "none";
+            //document.getElementById("firebaseui-auth-container").style.display = "none";
             this.setState({
                 showLogin: false
             });
@@ -149,9 +145,7 @@ class App extends React.Component {
                 document.querySelector(".loader").style.display = "none";
             }, 500);
         this.initLogin();
-            document.getElementById("sign-in").addEventListener("click", () => {
-                this.showLoginOptions();
-            });
+            document.getElementById("sign-in").addEventListener("click", () => {this.showLoginOptions();});
          
         }
         this.setState({
@@ -180,8 +174,8 @@ class App extends React.Component {
             });
             document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
             this.hideProgress();  
-            console.log(`whoname: ${this.state.whoName}`);
-            console.log(`whoId: ${this.state.whoId}`);            
+            console.log(`whoname: ${snap.val().whoName}`);
+            console.log(`whoId: ${ snap.val().whoId}`);            
         });
     }
 
@@ -208,7 +202,7 @@ class App extends React.Component {
     return (<div>
             <div className="container board-container">
               <div className="board-title">
-               <LogHere />
+               <LogHere who= {this.state.login} />
                 <div id="shoutbox" className="tab-pane">
                   <form className="form-horizontal" id="shoutboxForm">
                     <div id="shoutbox-inner"> <div> {listOfShouts} </div> </div>
