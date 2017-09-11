@@ -25,7 +25,7 @@ class Shout extends React.Component {
     };
     firebase.database().ref("/shoutbox").push(data);
     console.log("Creating shout...");
-    console.log(who);
+    console.log(data);
     this.setState({
       shout: ''
     });

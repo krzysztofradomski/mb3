@@ -3,14 +3,7 @@ import './App.css';
 
 function configBase(state) {
   let this.state = state;
-    let config = {
-      apiKey: "AIzaSyANmT2lWop_rbnLuXcl2V13Izjg3H3ybaY",
-      authDomain: "messageboard1-6c745.firebaseapp.com",
-      databaseURL: "https://messageboard1-6c745.firebaseio.com",
-      projectId: "messageboard1-6c745",
-      storageBucket: "messageboard1-6c745.appspot.com",
-      messagingSenderId: "515471374408"
-    };
+    let config =firebase
     let firebase = this.state.firebase;
     firebase.initializeApp(config);
     let uiConfig = {
