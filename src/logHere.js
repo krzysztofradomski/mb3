@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './css/App.css';
 
 class LogHere extends React.Component {
     constructor(props) {
@@ -12,12 +12,12 @@ class LogHere extends React.Component {
     }
 
     hideLoader() {
-        return this.state.loaded === true ? 'none' : 'block';
+        return this.state.loaded ? 'none' : 'block';
     }
 
     showLoginBox() {
         let style;
-        if (this.state.displayStyle === 'none') { style = 'block' } else { style = 'none' }
+        this.state.displayStyle === 'none' ? style = 'block' : style = 'none';
         this.setState({ displayStyle: style });
         if (
             this.state.whoName !== "anonymous"

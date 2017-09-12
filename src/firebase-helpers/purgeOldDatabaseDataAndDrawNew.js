@@ -4,13 +4,13 @@ function purgeOldDatabaseDataAndDrawNew(name, ref) {
         .once("value", (snap) => {
             snap.forEach((item) => {
                 item.ref.remove();
-                deleted +=1;
+                deleted = deleted + 1;
             });
             console.log(
                 `Total outdated data removed from ${name}: ${deleted}`
             );
         })
-        .then(() => {
+        .then(function() {
             deleted !== 0 ?
                 console.log(`Finished purging old data from: ${name}`) :
                 console.log(`...  ${name} up to date, no data purged...`);

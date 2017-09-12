@@ -1,9 +1,9 @@
 import React from 'react';
-import './App.css';
+import './css/App.css';
 import Shout from './newShout';
 import LogHere from './logHere';
-import firebaseConfig from './firebaseConfig';
-import purgeOldDatabaseDataAndDrawNew from './purgeOldDatabaseDataAndDrawNew';
+import firebaseConfig from './firebase-helpers/firebaseConfig';
+import purgeOldDatabaseDataAndDrawNew from './firebase-helpers/purgeOldDatabaseDataAndDrawNew';
 
 class App extends React.Component {
     constructor() {
@@ -29,7 +29,7 @@ class App extends React.Component {
         let firebase = this.state.firebase;
         firebase.initializeApp(config);
         let uiConfig = firebaseConfig.ui;
-        const ui = new this.state.firebaseui.auth.AuthUI(
+        let ui = new this.state.firebaseui.auth.AuthUI(
             this.state.firebase.auth()
         );
         ui.start("#firebaseui-auth-container", uiConfig);
