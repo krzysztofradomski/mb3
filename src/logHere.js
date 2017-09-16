@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './css/App.css';
 
 class LogHere extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -35,11 +36,13 @@ class LogHere extends React.Component {
 
     render() {
         return (
-            <div><div id="firebaseui-auth-container" style={{display: this.state.displayStyle}}> </div>
-        <div id="sign-in-status"> {this.props.who}</div> 
-        <div id="sign-in" onClick= {() => this.showLoginBox()}> {this.props.who === 'Signed out' ? 'Sign in' : 'Sign out'}</div>
-        <div id="account-details" ></div> <h1 > Message Board Shoutbox</h1>
-        <div className="loader" style={{display: this.hideLoader()}} id="ldr" ></div></div>
+            <div>
+                <div id="firebaseui-auth-container" style={{display: this.state.displayStyle}}></div>
+                <div id="sign-in-status"> {this.props.who}</div> 
+                <div id="sign-in" onClick= {() => this.showLoginBox()}> {this.props.who === 'Signed out' ? 'Sign in' : 'Sign out'}</div>
+                <h1 > Message Board Shoutbox</h1>
+                <div className="loader" style={{display: this.hideLoader()}} id="ldr" ></div>
+            </div>
         )
     }
 }
