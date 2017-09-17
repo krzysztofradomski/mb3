@@ -1,9 +1,11 @@
 import React from 'react';
-import './css/App.css';
+import './css/index.css';
 import Shout from './newShout';
 import LogHere from './logHere';
 import firebaseConfig from './firebase-helpers/firebaseConfig';
 import purgeOldDatabaseDataAndDrawNew from './firebase-helpers/purgeOldDatabaseDataAndDrawNew';
+import Nav from './nav';
+import stickyModals from './stickyModals'
 
 class App extends React.Component {
     constructor() {
@@ -20,7 +22,8 @@ class App extends React.Component {
             refShoutbox: "",
             keyName: "",
             firebase: global.firebase,
-            firebaseui: global.firebaseui
+            firebaseui: global.firebaseui,
+            cats: [0,1,2,3]
         };
     }
 
@@ -100,6 +103,7 @@ class App extends React.Component {
             });
             this.initLogin();
         });
+        let startmodals = this.state.cats.map((nr, i) => stickyModals(nr));
     }
 
     componentDidUpdate() {
@@ -119,17 +123,47 @@ class App extends React.Component {
                 {new Date(item.timestamp).toLocaleTimeString()} on {new Date(item.timestamp).toLocaleDateString()}
             </p>
           </div>
-
         );
+
+        const listOfCats = this.state.cats.map((nr, i) =>
+            <div id={"cat" + nr}  key={i} className="tab-pane fade">
+            <div data-cat={"Category " + nr} className={"board-item -sticky"+ nr} id={"-sticky" + nr}>
+                <h4>Sticky - Admin</h4>
+                <p>Hello users, here is your admin speaking. All entries with Category {nr} go into here. The entries are purged every 24h. The entries are validated, but not moderated. Good luck and have fun.</p>
+            </div>
+            <div id={"modal--sticky" + nr} className={"modal -sticky" + nr} data-user-id="Admin" data-user-name="Admin">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <span id={"close-modal--sticky" + nr} className="close"  >×</span>
+                        <h2>Sticky</h2>
+                    </div>
+                    <div className="modal-body">
+                        <p>Hello users, here is your admin speaking. All entries from Category {nr} go into here. The entries are purged every 24h. The entries are validated, but not moderated. Good luck and have fun.</p>
+                    </div>
+                    <div className="modal-footer">
+                        <p>Admin</p>
+                        <p>Added in July, 2017.<br/>Expires: never.</p>
+                    </div>
+                </div>
+            </div>    
+        </div>
+        );
+
         return (<div>
             <div className="container board-container">
               <div className="board-title">
                <LogHere who= {this.state.login} loaded={this.state.loaded}/>
-                <div id="shoutbox" className="tab-pane">
-                  <form className="form-horizontal" id="shoutboxForm">
-                    <div id="shoutbox-inner"> <div> {listOfShouts} </div> </div>
-                    <Shout state = {this.state}/>
-                  </form>
+               <Nav />
+               <div className="tab-content fill">
+                    {listOfCats}
+                    <div id="shoutbox" className="tab-pane fade in active">
+                      <form className="form-horizontal" id="shoutboxForm">
+                        <div id="shoutbox-inner"> 
+                            <div> {listOfShouts} </div> 
+                        </div>
+                        <Shout state = {this.state}/>
+                      </form>
+                    </div>
                 </div>
                 <footer> Made by KR. </footer>
               </div>

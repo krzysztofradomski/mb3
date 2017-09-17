@@ -13,7 +13,7 @@
   left: -120px;
   top: -8px;
   font-size: 3vw;
-  font-family: "Denk One"; }
+  font-family: "tahoma"; }
 
 .loader {
   border: 10px solid white;
@@ -58,7 +58,7 @@
 
 footer {
   color: white;
-  font-family: "Denk One"; }
+  font-family: "tahoma"; }
 
 .modal-footer p {
   margin: 10px 0 10px; }
@@ -68,7 +68,7 @@ footer {
   border: 5px solid navy;
   border-radius: 15px;
   color: white;
-  font-family: "Denk One";
+  font-family: "tahoma";
   margin: 5px;
   padding: 5px;
     margin-right: 0px;
@@ -141,7 +141,7 @@ footer {
   padding: 10px;
   text-align: center;
   color: white;
-  font-family: "Denk One"; }
+  font-family: "tahoma"; }
 
 .nav-tabs.nav-justified > li > a {
   background-color: steelblue;
@@ -152,14 +152,14 @@ footer {
   background-color: navy;
   border-radius: 0px;
   color: white;
-  font-family: "Denk One";
+  font-family: "tahoma";
   border: none;
   border-bottom: 2px solid navy;
   outline: 0; }
 
 .nav-tabs li a {
   color: white;
-  font-family: "Denk One"; }
+  font-family: "tahoma"; }
 
 footer {
   position: relative;
@@ -189,7 +189,7 @@ footer {
   margin: 10px;
   text-align: center;
   color: white;
-  font-family: "Denk One"; }
+  font-family: "tahoma"; }
 
 .board-item h4 {
   text-decoration: underline;
@@ -258,6 +258,10 @@ footer {
   padding: 2px 16px;
   overflow: hidden;
   text-overflow: ellipsis; }
+
+  .modal-body p {
+    color: black;
+  }
 
 /* Modal Footer */
 .modal-footer {
