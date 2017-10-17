@@ -314,7 +314,12 @@ footer {
 
 .delete {
   font-weight: bold;
-  color: darkred; }
+  color: darkred; 
+}
+
+#contact {
+  color: black;
+}
 
 #contactForm > div > div {
   width: 80%;

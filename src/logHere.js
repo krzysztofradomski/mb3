@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './css/App.css';
+import PostForm from './postForm';
+
 
 class LogHere extends React.Component {
     
@@ -40,8 +42,9 @@ class LogHere extends React.Component {
                 <div id="firebaseui-auth-container" style={{display: this.state.displayStyle}}></div>
                 <div id="sign-in-status"> {this.props.who}</div> 
                 <div id="sign-in" onClick= {() => this.showLoginBox()}> {this.props.who === 'Signed out' ? 'Sign in' : 'Sign out'}</div>
-                <h1 > Message Board Shoutbox</h1>
+                
                 <div className="loader" style={{display: this.hideLoader()}} id="ldr" ></div>
+
             </div>
         )
     }

@@ -5,7 +5,8 @@ import LogHere from './logHere';
 import firebaseConfig from './firebase-helpers/firebaseConfig';
 import purgeOldDatabaseDataAndDrawNew from './firebase-helpers/purgeOldDatabaseDataAndDrawNew';
 import Nav from './nav';
-import stickyModals from './stickyModals'
+import stickyModals from './stickyModals';
+import PostForm from './postForm';
 
 class App extends React.Component {
     constructor() {
@@ -23,7 +24,8 @@ class App extends React.Component {
             keyName: "",
             firebase: global.firebase,
             firebaseui: global.firebaseui,
-            cats: [0,1,2,3]
+            cats: [0,1,2,3],
+            showForm: false
         };
     }
 
@@ -107,7 +109,8 @@ class App extends React.Component {
     }
 
     componentDidUpdate() {
-        document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
+        //document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
+         //this.setState({ showForm: this.props.showForm })
     }
 
     render() {
@@ -152,7 +155,11 @@ class App extends React.Component {
         return (<div>
             <div className="container board-container">
               <div className="board-title">
+              <h1> Message Board
+                    <button id="showAdd" className="add-button" onClick= {() => this.setState({showForm: true})}>+</button> 
+               </h1>
                <LogHere who= {this.state.login} loaded={this.state.loaded}/>
+               <PostForm who= {this.state.login} toggle={this.state.showForm} whoId={this.state.whoId} whoName={this.state.whoName}/>
                <Nav />
                <div className="tab-content fill">
                     {listOfCats}
