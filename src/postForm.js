@@ -86,19 +86,21 @@ class PosthtmlForm extends React.Component {
         //mb2.drawEntry(mb2.keyName, title, category, message, email, timestamp, mb2.whoId, mb2.whoName, handle);
 
         //mb2.drawDeleteEntryButton();
-        this.formReset()
-
-        setTimeout(() => this.setState({ toggle: false }), 5000);
+       
+        setTimeout(() => this.formReset(), 5000);
     }
 
     formReset() {
         this.setState({ title: '', handle: '', message: '', message: '', email: '' });
         global.grecaptcha.reset();
+        this.setState({toggle: false});
+        this.clearValidationHighlight(this.state.activeInput);
     }
 
     toggle() {
         return this.state.toggle ? 'block' : 'none';
     }
+
 
     validate(...items) {
         items = items.map((item) => { return item !== undefined && item !== '' });
@@ -147,7 +149,7 @@ class PosthtmlForm extends React.Component {
         return (<div id="modal-input" className="modal" style={{display: this.toggle()}}>
                   <div className="modal-content">
                     <div className="modal-header">
-                      <span id="closeAdd" className="close" onClick={() => this.setState({toggle: false})}>&times;</span>
+                      <span id="closeAdd" className="close" onClick={() => this.formReset()}>&times;</span>
                       <h2>Type in your message below:</h2>
                     </div>
                     <div className="modal-body">
