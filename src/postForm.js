@@ -12,32 +12,45 @@ class PosthtmlForm extends React.Component {
             displayStyle: 'none',
             toggle: props.toggle,
             handle: '',
-            message: ''
+            message: '',
+            activeInput: null
         };
         this.handleInputChange = this.handleInputChange.bind(this);
-    //this.handleSubmit = this.handleSubmit.bind(this);
+        //this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
     write(val) {
         return val;
-      }
+    }
 
-       handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+    handleInputChange(event) {
 
-    this.setState({
-      [name]: value
-    });
-  }
+        this.setState({
+           activeInput: event.target
+        });
+
+     
+
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+
+        event.target.style.border = `2px solid ${this.highlightValidation(event.target)}`;
+        //event.target.onBlur() {alert('fdfs')}
+        //console.log(event.target);
+       // event.target.addEventListener('"focusout', this.clearValidationHighlight(event.target), false);
+    }
 
     post() {
         let $ = global.jQuery;
         let title = this.state.title;
         let category = $("#category").val();
-        let email =  this.state.email;
+        let email = this.state.email;
         let message = this.state.message;
         let handle = this.state.handle;
         console.log(category + " " + email + " " + message);
@@ -73,8 +86,14 @@ class PosthtmlForm extends React.Component {
         //mb2.drawEntry(mb2.keyName, title, category, message, email, timestamp, mb2.whoId, mb2.whoName, handle);
 
         //mb2.drawDeleteEntryButton();
-        this.setState({title: '', handle: '', message: '', message: '', email: ''});
+        this.formReset()
 
+        setTimeout(() => this.setState({ toggle: false }), 5000);
+    }
+
+    formReset() {
+        this.setState({ title: '', handle: '', message: '', message: '', email: '' });
+        global.grecaptcha.reset();
     }
 
     toggle() {
@@ -82,8 +101,9 @@ class PosthtmlForm extends React.Component {
     }
 
     validate(...items) {
-      items = items.map((item) => {return item !== undefined && item !== ''});
-      return items.reduce(function(a,b){return a*b;}) && global.grecaptcha.getResponse() !== "";
+        items = items.map((item) => { return item !== undefined && item !== '' });
+        let email = this.state.email ? this.state.email.match(/@+\w+\./gi) ? true : false : true;
+        return email && items.reduce(function(a, b) { return a * b; }) && global.grecaptcha.getResponse() !== "";
     }
 
     /*validate() {
@@ -93,6 +113,16 @@ class PosthtmlForm extends React.Component {
              this.state.category !== '' &&
              global.grecaptcha.getResponse() !== ""
     }*/
+
+    highlightValidation(field) {
+        field.target;
+        let email = field.type == 'email' ? field.value.match(/@+\w+\./gi) ? true : false : true;
+        return email && typeof field.value !== undefined && field.value !== '' ? 'green' : 'red';
+    }
+
+    clearValidationHighlight(field) {
+        return field.style.border = '1px solid rgb(204, 204, 204)';
+    }
 
     componentDidMount() {
         let captcha = global.grecaptcha.render('myCaptcha', {
@@ -107,8 +137,13 @@ class PosthtmlForm extends React.Component {
         //this.props.onChange(this.state.toggle);
     }
 
+    componentDidUpdate(prevProps, prevState){
+      console.log(prevState.activeInput == this.state.activeInput);
+      prevState.activeInput !== null && prevState.activeInput.id !== this.state.activeInput.id ? this.clearValidationHighlight(prevState.activeInput) : '';
+    }
+
     render() {
-        const validated = this.validate(this.state.email, this.state.message, this.state.title);
+        const validated = this.validate(this.state.email, this.state.message, this.state.title, this.state.category);
         return (<div id="modal-input" className="modal" style={{display: this.toggle()}}>
                   <div className="modal-content">
                     <div className="modal-header">
@@ -132,12 +167,12 @@ class PosthtmlForm extends React.Component {
                                 <label htmlFor="title" className="control-label">Title</label>
                                 <div>
                                   <input type="text" className="form-control required" id="title" name="title" placeholder="Title example"  maxLength="30" required   value={this.state.title}
-            onChange={this.handleInputChange}/>
+            onChange={this.handleInputChange} onBlur={() => this.clearValidationHighlight}/>
                                 </div>
                                 <label htmlFor="category" className="control-label">Category</label>
                                 <div>
                                   
-                                  <select className="form-control required" id="category" name="category" required>
+                                  <select className="form-control required" id="category" name="category" required onChange={this.handleInputChange}>
                                     <option value="">Choose category...</option>
                                     <option>Category 0</option>
                                     <option>Category 1</option>
