@@ -102,9 +102,11 @@ class PosthtmlForm extends React.Component {
         });
     }
 
-    componentWillReceiveProps() {
+    componentWillReceiveProps(newProps) {
         this.setState({ toggle: this.props.toggle });
+        this.setState({whoName: newProps.whoName});
         global.grecaptcha.reset();
+   
         //this.props.onChange(this.state.toggle);
     }
 
@@ -128,7 +130,7 @@ class PosthtmlForm extends React.Component {
                           <br/>
                           <div className="">
                             <htmlForm className="htmlForm-horizontal" id="contactForm">
-                              <p>Adding entry as anonymous, or specify below:</p>
+                              <p>Adding entry as {this.state.whoName}, or specify below:</p>
                               <div className="form-group">
                                 <label htmlFor="handle" className="control-label">Handle</label>
                                 <div>

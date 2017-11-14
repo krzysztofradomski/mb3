@@ -36,6 +36,8 @@ class LogHere extends React.Component {
         this.setState({ loaded: this.props.loaded });
     }
 
+    
+
     render() {
         return (
             <div>

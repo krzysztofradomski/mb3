@@ -7,14 +7,16 @@ import purgeOldDatabaseDataAndDrawNew from './firebase-helpers/purgeOldDatabaseD
 import Nav from './nav';
 import stickyModals from './stickyModals';
 import PostForm from './postForm';
+import drawEntry from './drawEntry.js';
 
 class App extends React.Component {
     constructor() {
         super();
         this.state = {
             listOfShouts: [],
+            listOfEntries: [],
             loaded: false,
-            whoId: null,
+            whoId: 'anonymous',
             whoName: 'anonymous',
             showLogin: false,
             login: 'Signed out',
@@ -64,6 +66,7 @@ class App extends React.Component {
                         this.setState({
                             login: `Signed in as ${displayName}`
                         });
+                        this.forceUpdate()
                     });
                 } else {
                     this.setState({
@@ -76,16 +79,11 @@ class App extends React.Component {
             (error) => {
                 console.log(error);
             }
+
         );
     };
 
-    componentWillMount() {
-        console.log(`Starting app ${navigator.onLine ? `online` : `offline`}...`)
-        this.configBase();
-    }
-
-    componentDidMount() {
-        purgeOldDatabaseDataAndDrawNew("shoutbox", this.state.refShoutbox);
+    drawShouts() {
         const rootRef = this.state.firebase.database().ref().child("/shoutbox").orderByChild("timestamp").limitToLast(10);
         rootRef.on("child_added", (snap) => {
             const previousList = this.state.listOfShouts;
@@ -103,14 +101,58 @@ class App extends React.Component {
             this.setState({
                 loaded: true
             });
-            this.initLogin();
+            //this.initLogin();
         });
+    }
+
+    drawEntries() {
+        const rootRef = this.state.firebase.database().ref().child("/entries").orderByChild("timestamp").limitToLast(50);
+        rootRef.on("child_added", (snap) => {
+            const previousList = this.state.listOfEntries;
+            previousList.push({
+                category: snap.val().category,
+                email: snap.val().email,
+                handle: snap.val().handle,
+                message: snap.val().message,
+                timestamp: snap.val().timestamp,
+                title: snap.val().title,
+                whoName: snap.val().whoName,
+                whoId: snap.val().whoId,
+                key: snap.V.path.o[1]
+            });
+            this.setState({
+                listOfEntries: previousList
+            });
+            console.log(`whoname: ${snap.val().whoName}, whoId: ${ snap.val().whoId}`);
+            console.log(`${this.state.listOfEntries.length === 10 ? `Entries rendered in ${Date.now() - this.state.now} ms.` : `rendering...`}`);
+            this.setState({
+                loaded: true
+            });
+            //this.initLogin();
+        });
+    }
+
+    componentWillMount() {
+        console.log(`Starting app ${navigator.onLine ? `online` : `offline`}...`);
+    
+        this.configBase();
+    }
+
+    componentDidMount() {
+        purgeOldDatabaseDataAndDrawNew("shoutbox", this.state.refShoutbox);
+        this.initLogin();
+        this.drawShouts();
+        this.drawEntries();
+console.log(this.state.listOfEntries);
         let startmodals = this.state.cats.map((nr, i) => stickyModals(nr));
     }
 
     componentDidUpdate() {
-        //document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
+        document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
          //this.setState({ showForm: this.props.showForm })
+        console.log('whoName:');
+        console.log(this.state.whoName);
+
     }
 
     render() {
@@ -127,6 +169,11 @@ class App extends React.Component {
             </p>
           </div>
         );
+
+        let entries = this.state.entries;
+        const listOfEntries = this.state.listOfEntries.map((item, i) => 
+            drawEntry(item.key, item.title, item.category, item.message, item.email, item.timestamp, item.whoId, item.whoName, item.handle)
+            );
 
         const listOfCats = this.state.cats.map((nr, i) =>
             <div id={"cat" + nr}  key={i} className="tab-pane fade">
