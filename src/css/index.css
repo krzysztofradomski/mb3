@@ -206,10 +206,11 @@ footer {
   line-height: 1.5em;
   height: 3em;
   display: -webkit-box;
+  text-overflow: ellipsis;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis; }
+   }
 
 .board-item h4, .modal h2 {
   padding: 5px;
@@ -251,7 +252,10 @@ footer {
 .modal-header {
   padding: 2px 16px;
   background-color: navy;
-  color: white; }
+  color: white; 
+  border: 2px solid white;
+      border-radius: 2px;
+}
 
 /* Modal Body */
 .modal-body {
@@ -260,7 +264,8 @@ footer {
   text-overflow: ellipsis; }
 
   .modal-body p {
-    color: black;
+    color: navy;
+    margin: 5px;
   }
 
 /* Modal Footer */
@@ -269,7 +274,10 @@ footer {
   background-color: navy;
   color: white;
   font-style: italic;
-  padding-bottom: 5px; }
+  padding-bottom: 5px; 
+  border: 2px solid white;
+      border-radius: 2px;
+}
 
 /* Modal Content */
 .modal-content {
@@ -291,7 +299,11 @@ footer {
 .close {
   float: right;
   font-size: 28px;
-  font-weight: bold; }
+  font-weight: bold; 
+  color: white;
+  opacity: 1;
+      margin-top: 5px;
+}
 
 .close:hover,
 .close:focus {
@@ -300,7 +312,8 @@ footer {
   cursor: pointer; }
 
 #close {
-  float: right; }
+  float: right; 
+  }
 
 .modal#modal-input .modal-content {
   margin: 5% auto; }
@@ -349,6 +362,7 @@ input, textarea {
 
 .panel {
   width: 100%; }
+
 
 /* Add Animation */
 @-webkit-keyframes animatetop {

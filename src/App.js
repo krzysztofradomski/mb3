@@ -1,4 +1,5 @@
 import React from 'react';
+import Dotdotdot from 'react-dotdotdot';
 import './css/index.css';
 import Shout from './newShout';
 import LogHere from './logHere';
@@ -8,6 +9,7 @@ import Nav from './nav';
 import stickyModals from './stickyModals';
 import PostForm from './postForm';
 import drawEntry from './drawEntry.js';
+import drawDeleteEntryButton from './drawDeleteEntryButton';
 
 class App extends React.Component {
     constructor() {
@@ -109,7 +111,7 @@ class App extends React.Component {
         const rootRef = this.state.firebase.database().ref().child("/entries").orderByChild("timestamp").limitToLast(50);
         rootRef.on("child_added", (snap) => {
             const previousList = this.state.listOfEntries;
-            previousList.push({
+            let entry = {
                 category: snap.val().category,
                 email: snap.val().email,
                 handle: snap.val().handle,
@@ -119,15 +121,19 @@ class App extends React.Component {
                 whoName: snap.val().whoName,
                 whoId: snap.val().whoId,
                 key: snap.V.path.o[1]
-            });
+            }
+            previousList.push(entry);
             this.setState({
                 listOfEntries: previousList
             });
             console.log(`whoname: ${snap.val().whoName}, whoId: ${ snap.val().whoId}`);
-            console.log(`${this.state.listOfEntries.length === 10 ? `Entries rendered in ${Date.now() - this.state.now} ms.` : `rendering...`}`);
+            console.log(`${this.state.listOfEntries.length > 0 ? `Entries rendered in ${Date.now() - this.state.now} ms.` : `rendering...`}`);
             this.setState({
                 loaded: true
             });
+            drawEntry(this.state.expiration, entry);
+            
+        
             //this.initLogin();
         });
     }
@@ -138,13 +144,19 @@ class App extends React.Component {
         this.configBase();
     }
 
+       componentWillUpdate(newProps) {
+        this.setState({ whoId: this.state.whoId });
+        this.setState({whoName: this.state.whoName});
+    }
+
     componentDidMount() {
         purgeOldDatabaseDataAndDrawNew("shoutbox", this.state.refShoutbox);
         this.initLogin();
         this.drawShouts();
         this.drawEntries();
-console.log(this.state.listOfEntries);
+console.log(this.state.listOfEntries.length);
         let startmodals = this.state.cats.map((nr, i) => stickyModals(nr));
+       
     }
 
     componentDidUpdate() {
@@ -156,6 +168,7 @@ console.log(this.state.listOfEntries);
     }
 
     render() {
+        drawDeleteEntryButton(this.state.whoId, this.state.whoName)
         let who = this.state.whoId;
         let float = (item) => { return who !== item.whoId ? 'right' : 'left' };
         const listOfShouts = this.state.listOfShouts.map((item, i) =>
@@ -170,16 +183,15 @@ console.log(this.state.listOfEntries);
           </div>
         );
 
-        let entries = this.state.entries;
-        const listOfEntries = this.state.listOfEntries.map((item, i) => 
-            drawEntry(item.key, item.title, item.category, item.message, item.email, item.timestamp, item.whoId, item.whoName, item.handle)
-            );
+
 
         const listOfCats = this.state.cats.map((nr, i) =>
             <div id={"cat" + nr}  key={i} className="tab-pane fade">
             <div data-cat={"Category " + nr} className={"board-item -sticky"+ nr} id={"-sticky" + nr}>
                 <h4>Sticky - Admin</h4>
-                <p>Hello users, here is your admin speaking. All entries with Category {nr} go into here. The entries are purged every 24h. The entries are validated, but not moderated. Good luck and have fun.</p>
+                <Dotdotdot clamp={3 | String | 'auto'}>
+                    <p>Hello users, here is your admin speaking. All entries with Category {nr} go into here. The entries are purged every 24h. The entries are validated, but not moderated. Good luck and have fun.</p>
+                </Dotdotdot>
             </div>
             <div id={"modal--sticky" + nr} className={"modal -sticky" + nr} data-user-id="Admin" data-user-name="Admin">
                 <div className="modal-content">

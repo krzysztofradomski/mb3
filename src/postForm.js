@@ -105,6 +105,7 @@ class PosthtmlForm extends React.Component {
     componentWillReceiveProps(newProps) {
         this.setState({ toggle: this.props.toggle });
         this.setState({whoName: newProps.whoName});
+         this.setState({whoId: newProps.whoId});
         global.grecaptcha.reset();
    
         //this.props.onChange(this.state.toggle);
