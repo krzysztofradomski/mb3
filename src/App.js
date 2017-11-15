@@ -68,7 +68,7 @@ class App extends React.Component {
                         this.setState({
                             login: `Signed in as ${displayName}`
                         });
-                        this.forceUpdate()
+                        //this.forceUpdate()
                     });
                 } else {
                     this.setState({
@@ -144,11 +144,6 @@ class App extends React.Component {
         this.configBase();
     }
 
-       componentWillUpdate(newProps) {
-        this.setState({ whoId: this.state.whoId });
-        this.setState({whoName: this.state.whoName});
-    }
-
     componentDidMount() {
         purgeOldDatabaseDataAndDrawNew("shoutbox", this.state.refShoutbox);
         this.initLogin();
@@ -168,7 +163,8 @@ console.log(this.state.listOfEntries.length);
     }
 
     render() {
-        drawDeleteEntryButton(this.state.whoId, this.state.whoName)
+
+        drawDeleteEntryButton(this.state.whoId, this.state.whoName);
         let who = this.state.whoId;
         let float = (item) => { return who !== item.whoId ? 'right' : 'left' };
         const listOfShouts = this.state.listOfShouts.map((item, i) =>

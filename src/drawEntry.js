@@ -12,7 +12,7 @@ let shoutboxContainer = document.getElementById("shoutbox-inner");
     let startDate = new Date(item.timestamp).toLocaleDateString() + " at " + new Date(item.timestamp).toLocaleTimeString().slice(0, 5);
     let expiryDate = new Date(item.timestamp + expire * 60 * 60 * 1000).toLocaleDateString() + " at " + new Date(item.timestamp + expire * 60 * 60 * 1000).toLocaleTimeString().slice(0, 5);
 
-    let modalContent = '<div id="' + modalId + '" class="modal ' + item.key + '" data-user-id="' + item.whoId + '" data-user-name="' + who + '">' +
+    let modalContent = '<div id="' + modalId + '" class="modal ' + item.key + '" data-user-id="' + item.whoId + '" data-user-name="' + item.whoName + '">' +
         '<div class="modal-content">' +
         '<div class="modal-header">' +
         '<span id="close-' + modalId + '" class="close" style="float: right">&times;</span>' +
@@ -29,19 +29,19 @@ let shoutboxContainer = document.getElementById("shoutbox-inner");
 
     switch (item.category) {
         case "Category 0":
-            categoryZeroContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + item.whoName + '</h4><p>' + item.message + '</p></div>' + modalContent);
+            categoryZeroContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + who + '</h4><p>' + item.message + '</p></div>' + modalContent);
             break;
         case "Category 1":
-            categoryOneContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + item.whoName + '</h4><p>' + item.message + '</p></div>' + modalContent);
+            categoryOneContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + who + '</h4><p>' + item.message + '</p></div>' + modalContent);
             break;
         case "Category 2":
-            categoryTwoContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + item.whoName + '</h4><p>' + item.message + '</p></div>' + modalContent);
+            categoryTwoContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + who + '</h4><p>' + item.message + '</p></div>' + modalContent);
             break;
         case "Category 3":
-            categoryThreeContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + item.whoName + '</h4><p>' + item.message + '</p></div>' + modalContent);
+            categoryThreeContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + who + '</h4><p>' + item.message + '</p></div>' + modalContent);
             break;
         default:
-            categoryZeroContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + item.whoName + '</h4><p>' + item.message + '</p></div>' + modalContent);
+            categoryZeroContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + who + '</h4><p>' + item.message + '</p></div>' + modalContent);
             break;
     }
     let modal = document.getElementById(modalId);

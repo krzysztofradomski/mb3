@@ -32,11 +32,11 @@ class LogHere extends React.Component {
         }
     }
 
+    
+
     componentWillReceiveProps() {
         this.setState({ loaded: this.props.loaded });
     }
-
-    
 
     render() {
         return (

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "react": "^15.6.1",
+    "react-captcha": "^2.0.9",
     "react-dom": "^15.6.1",
     "react-dotdotdot": "^1.1.0",
     "react-scripts": "1.0.11"

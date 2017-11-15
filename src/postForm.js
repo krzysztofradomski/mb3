@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './css/App.css';
 
+const Captcha = require('react-captcha');  
+
 class PosthtmlForm extends React.Component {
 
     constructor(props) {
@@ -68,7 +70,7 @@ class PosthtmlForm extends React.Component {
 
     formReset() {
         this.setState({ title: '', handle: '', message: '', message: '', email: '' });
-        global.grecaptcha.reset();
+        //global.grecaptcha.reset();
         this.setState({toggle: false});
         this.setState({heading: 'Type in your message below:'});
         this.clearValidationHighlight(this.state.activeInput);
@@ -96,17 +98,17 @@ class PosthtmlForm extends React.Component {
     }
 
     componentDidMount() {
-        let captcha = global.grecaptcha.render('myCaptcha', {
-            'sitekey': '6LcGHiUUAAAAAFCQHYmU5ykjBZBhmYdARg3eX3Jc',
-            'theme': 'light'
-        });
+        // let captcha = global.grecaptcha.render('myCaptcha', {
+        //     'sitekey': '6LcGHiUUAAAAAFCQHYmU5ykjBZBhmYdARg3eX3Jc',
+        //     'theme': 'light'
+        // });
     }
 
     componentWillReceiveProps(newProps) {
         this.setState({ toggle: this.props.toggle });
         this.setState({whoName: newProps.whoName});
          this.setState({whoId: newProps.whoId});
-        global.grecaptcha.reset();
+        //global.grecaptcha.reset();
    
         //this.props.onChange(this.state.toggle);
     }
@@ -167,7 +169,12 @@ class PosthtmlForm extends React.Component {
                                 </div>
                                 <div className="">
                                   <br/>
-                                  <div id="myCaptcha"></div>  
+                                  <Captcha
+    sitekey = '6LcGHiUUAAAAAFCQHYmU5ykjBZBhmYdARg3eX3Jc'
+    lang = 'en'
+    theme = 'light'
+    type = 'image'
+    callback = {(value) => console.log(value)}/> 
                                   <input id="submit" name="submit" type="submit" disabled={!validated} value="Send" onClick={()=>{this.post();}}/>
                                 </div>
                               </div>                        
