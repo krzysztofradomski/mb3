@@ -1,1 +1,1 @@
-first tries at react version of mb project
+Message board app - React version.

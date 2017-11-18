@@ -10,26 +10,31 @@ class Shout extends React.Component {
     }
 
     handleSubmit(event) {
-        let firebase = this.props.state.firebase;
-        let shout = this.state.shout;
-        let handle = "anon";
-        let who = this.props.state.handle || this.props.state.whoName;
-        let timestamp = Date.now();
-        let whoId = this.props.state.whoId || "anonymous";
-        let whoName = this.props.state.whoName;
-        let data = {
-            shout,
-            timestamp,
-            whoId,
-            whoName,
-            handle
-        };
-        firebase.database().ref("/shoutbox").push(data);
-        console.log("Creating shout...");
-        console.log(data);
-        this.setState({
-            shout: ''
-        });
+        switch (this.state.shout) {
+            case '':
+                break;
+            default:
+                let firebase = this.props.firebase;
+                let shout = this.state.shout;
+                let handle = "anon";
+                let who = this.props.handle || this.props.whoName;
+                let timestamp = Date.now();
+                let whoId = this.props.whoId || "anonymous";
+                let whoName = this.props.whoName;
+                let data = {
+                    shout,
+                    timestamp,
+                    whoId,
+                    whoName,
+                    handle
+                };
+                firebase.database().ref("/shoutbox").push(data);
+                console.log("Creating shout...");
+                console.log(data);
+                this.setState({
+                    shout: ''
+                });
+        }
         event.preventDefault();
     }
 
@@ -49,14 +54,14 @@ class Shout extends React.Component {
             className="form-control required"
             id="shout"
             name="shout"
-            placeholder="type here"
+            placeholder="type here to send"
             value={this.state.shout}
             onChange={this.handleChange.bind(this)}
             required
           />
           <input
             id="submitShoutbox"
-            name="submit"
+            name="submit-shout"
             type="submit"
             value="Send"
             onClick={this.handleSubmit.bind(this)}

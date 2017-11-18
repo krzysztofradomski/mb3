@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import './css/App.css';
 
 const Captcha = require('react-captcha');  
@@ -12,7 +13,7 @@ class PosthtmlForm extends React.Component {
             whoName: props.whoName,
             whoId: props.whoId,
             displayStyle: 'none',
-            toggle: props.toggle,
+            toggle:false,
             handle: '',
             message: '',
             activeInput: null,
@@ -59,18 +60,32 @@ class PosthtmlForm extends React.Component {
             whoName: this.state.whoName,
             handle: this.state.handle
         };
-        console.log(data);
-        let push = global.firebase.database().ref("/entries").push(data);
-        console.log("Creating entry key: " + push.key);
-        this.setState({heading: 'Your message has been sent, this window will now close.'});
-        //mb2.drawEntry(mb2.keyName, title, category, message, email, timestamp, mb2.whoId, mb2.whoName, handle);
-        //mb2.drawDeleteEntryButton();
-        setTimeout(() => this.formReset(), 5000);
+        if (global.grecaptcha.getResponse() !== '') {
+            console.log(data);
+            let push = global.firebase.database().ref("/entries").push(data);
+            console.log("Creating entry key: " + push.key);
+            this.setState({heading: 'Your message has been sent, this window will now close.'});
+            //mb2.drawEntry(mb2.keyName, title, category, message, email, timestamp, mb2.whoId, mb2.whoName, handle);
+            //mb2.drawDeleteEntryButton();
+            this.setState({ title: '', handle: '', message: '', message: '', email: '' });
+            setTimeout(() => this.formReset(), 5000);
+        } else
+        {
+            //console.log(data);
+            //let push = global.firebase.database().ref("/entries").push(data);
+            console.log("captcha error");
+            this.setState({heading: 'Try again now'});
+            //mb2.drawEntry(mb2.keyName, title, category, message, email, timestamp, mb2.whoId, mb2.whoName, handle);
+            //mb2.drawDeleteEntryButton();
+            //this.setState({ title: '', handle: '', message: '', message: '', email: '' });
+            //setTimeout(() => this.formReset(), 5000);
+        }
+        
     }
 
     formReset() {
+        global.grecaptcha.reset();
         this.setState({ title: '', handle: '', message: '', message: '', email: '' });
-        //global.grecaptcha.reset();
         this.setState({toggle: false});
         this.setState({heading: 'Type in your message below:'});
         this.clearValidationHighlight(this.state.activeInput);
@@ -84,7 +99,11 @@ class PosthtmlForm extends React.Component {
     validate(...items) {
         items = items.map((item) => { return item !== undefined && item !== '' });
         let email = this.state.email ? this.state.email.match(/@+\w+\./gi) ? true : false : true;
-        return email && items.reduce(function(a, b) { return a * b; }) && global.grecaptcha.getResponse() !== "";
+        //let c = typeof global.grecaptcha !== 'undefined' ? global.grecaptcha.getResponse() : 'no captcha';
+        //console.log(c);
+        let v = email && items.reduce(function(a, b) { return a * b; });
+        console.log(v ? 'validated' : 'not validated');
+        return v;
     }
 
     highlightValidation(field) {
@@ -105,22 +124,22 @@ class PosthtmlForm extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({ toggle: this.props.toggle });
+        this.setState({ toggle: newProps.toggle });
         this.setState({whoName: newProps.whoName});
-         this.setState({whoId: newProps.whoId});
+        this.setState({whoId: newProps.whoId});
         //global.grecaptcha.reset();
-   
-        //this.props.onChange(this.state.toggle);
+
     }
 
     componentDidUpdate(prevProps, prevState){
+
       console.log(prevState.activeInput == this.state.activeInput);
-       
+       console.log('form component updated')
       prevState.activeInput !== null && prevState.activeInput.id !== this.state.activeInput.id ? this.clearValidationHighlight(prevState.activeInput) : '';
     }
 
     render() {
-        const validated = this.validate(this.state.email, this.state.message, this.state.title, this.state.category)
+        const validated = this.validate(this.state.email, this.state.message, this.state.title, this.state.category);
         return (<div id="modal-input" className="modal" style={{display: this.toggle()}}>
                   <div className="modal-content">
                     <div className="modal-header">
@@ -169,13 +188,8 @@ class PosthtmlForm extends React.Component {
                                 </div>
                                 <div className="">
                                   <br/>
-                                  <Captcha
-    sitekey = '6LcGHiUUAAAAAFCQHYmU5ykjBZBhmYdARg3eX3Jc'
-    lang = 'en'
-    theme = 'light'
-    type = 'image'
-    callback = {(value) => console.log(value)}/> 
-                                  <input id="submit" name="submit" type="submit" disabled={!validated} value="Send" onClick={()=>{this.post();}}/>
+                                  <input className="g-recaptcha"
+data-sitekey="6LcPXjkUAAAAAPdWdVxs2b1tg6LBK8KYmKc1XqfD" id="submit" name="submit-form" type="submit" disabled={!validated} value="Send" onClick={()=>{this.post();}}/>
                                 </div>
                               </div>                        
                             </htmlForm>                   

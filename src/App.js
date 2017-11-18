@@ -184,10 +184,10 @@ console.log(this.state.listOfEntries.length);
         const listOfCats = this.state.cats.map((nr, i) =>
             <div id={"cat" + nr}  key={i} className="tab-pane fade">
             <div data-cat={"Category " + nr} className={"board-item -sticky"+ nr} id={"-sticky" + nr}>
-                <h4>Sticky - Admin</h4>
-                <Dotdotdot clamp={3 | String | 'auto'}>
-                    <p>Hello users, here is your admin speaking. All entries with Category {nr} go into here. The entries are purged every 24h. The entries are validated, but not moderated. Good luck and have fun.</p>
-                </Dotdotdot>
+                <h4>Sticky - Admin</h4>      
+                <Dotdotdot className= "p-sticky" clamp={2 | String | 'auto'}>
+                    Hello users, here is your admin speaking. All entries with Category {nr} go into here. The entries are purged every 24h. The entries are validated, but not moderated. Good luck and have fun.
+                </Dotdotdot>           
             </div>
             <div id={"modal--sticky" + nr} className={"modal -sticky" + nr} data-user-id="Admin" data-user-name="Admin">
                 <div className="modal-content">
@@ -223,7 +223,7 @@ console.log(this.state.listOfEntries.length);
                         <div id="shoutbox-inner"> 
                             <div> {listOfShouts} </div> 
                         </div>
-                        <Shout state = {this.state}/>
+                        <Shout firebase={this.state.firebase} handle={this.state.handle} whoName={this.state.whoName} whoId={this.state.whoId}/>
                       </form>
                     </div>
                 </div>
