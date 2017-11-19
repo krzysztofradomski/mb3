@@ -20,6 +20,7 @@ class PosthtmlForm extends React.Component {
             heading: 'Type in your message below:'
         };
         this.handleInputChange = this.handleInputChange.bind(this);
+
         //this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -84,6 +85,8 @@ class PosthtmlForm extends React.Component {
     }
 
     formReset() {
+         //this.handleToggle();
+         this.props.handler(); 
         global.grecaptcha.reset();
         this.setState({ title: '', handle: '', message: '', message: '', email: '' });
         this.setState({toggle: false});
@@ -92,8 +95,14 @@ class PosthtmlForm extends React.Component {
     }
 
     toggle() {
+
         return this.state.toggle ? 'block' : 'none';
     }
+
+    //  handleToggle() {
+    //     console.log('handleToggle')
+    //     this.props.handler();    
+    // }
 
 
     validate(...items) {
@@ -107,7 +116,6 @@ class PosthtmlForm extends React.Component {
     }
 
     highlightValidation(field) {
-        field.target;
         let email = field.type == 'email' ? field.value.match(/@+\w+\./gi) ? true : false : true;
         return email && typeof field.value !== undefined && field.value !== '' ? 'green' : 'red';
     }
@@ -124,7 +132,8 @@ class PosthtmlForm extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({ toggle: newProps.toggle });
+        this.setState({toggle: newProps.toggle });
+        console.log('newProps.toggle: ' + newProps.toggle)
         this.setState({whoName: newProps.whoName});
         this.setState({whoId: newProps.whoId});
         //global.grecaptcha.reset();
@@ -139,11 +148,12 @@ class PosthtmlForm extends React.Component {
     }
 
     render() {
+        //let handleToUpdate  =   this.props.handleToUpdate;
         const validated = this.validate(this.state.email, this.state.message, this.state.title, this.state.category);
         return (<div id="modal-input" className="modal" style={{display: this.toggle()}}>
                   <div className="modal-content">
                     <div className="modal-header">
-                      <span id="closeAdd" className="close" onClick={() => this.formReset()}>&times;</span>
+                      <span id="closeAdd" className="close" onClick={() => {this.formReset()}}>&times;</span>
                       <h2>{this.state.heading}</h2>
                     </div>
                     <div className="modal-body">

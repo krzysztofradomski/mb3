@@ -35,6 +35,7 @@ class Shout extends React.Component {
                     shout: ''
                 });
         }
+
         event.preventDefault();
     }
 
@@ -43,6 +44,7 @@ class Shout extends React.Component {
             shout: event.target.value
         });
     }
+    
 
     render() {
         return (

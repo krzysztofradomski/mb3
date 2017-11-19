@@ -155,12 +155,19 @@ console.log(this.state.listOfEntries.length);
     }
 
     componentDidUpdate() {
-        document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
+        //document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
          //this.setState({ showForm: this.props.showForm })
         console.log('whoName:');
         console.log(this.state.whoName);
 
     }
+
+    handler() {
+  
+    this.setState({
+      showForm: false
+    })
+  }
 
     render() {
 
@@ -223,7 +230,7 @@ console.log(this.state.listOfEntries.length);
                         <div id="shoutbox-inner"> 
                             <div> {listOfShouts} </div> 
                         </div>
-                        <Shout firebase={this.state.firebase} handle={this.state.handle} whoName={this.state.whoName} whoId={this.state.whoId}/>
+                        <Shout handler= {this.handler.bind(this)} firebase={this.state.firebase} handle={this.state.handle} whoName={this.state.whoName} whoId={this.state.whoId}/>
                       </form>
                     </div>
                 </div>
