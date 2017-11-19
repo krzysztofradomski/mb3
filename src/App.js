@@ -31,6 +31,7 @@ class App extends React.Component {
             cats: [0,1,2,3],
             showForm: false
         };
+        this.handler = this.handler.bind(this);
     }
 
     configBase() {
@@ -86,7 +87,8 @@ class App extends React.Component {
     };
 
     drawShouts() {
-        const rootRef = this.state.firebase.database().ref().child("/shoutbox").orderByChild("timestamp").limitToLast(10);
+        const rootRef = this.state.firebase.database().ref("/shoutbox").orderByChild("timestamp").limitToLast(10);
+        console.log('rootRef: ' + rootRef)
         rootRef.on("child_added", (snap) => {
             const previousList = this.state.listOfShouts;
             previousList.push({
@@ -155,7 +157,7 @@ console.log(this.state.listOfEntries.length);
     }
 
     componentDidUpdate() {
-        //document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
+        document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
          //this.setState({ showForm: this.props.showForm })
         console.log('whoName:');
         console.log(this.state.whoName);
@@ -221,7 +223,7 @@ console.log(this.state.listOfEntries.length);
                     <button id="showAdd" className="add-button" onClick= {() => this.setState({showForm: true})}>+</button> 
                </h1>
                <LogHere who= {this.state.login} loaded={this.state.loaded}/>
-               <PostForm who= {this.state.login} toggle={this.state.showForm} whoId={this.state.whoId} whoName={this.state.whoName}/>
+               <PostForm handleToggle={this.handler} who= {this.state.login} toggle={this.state.showForm} whoId={this.state.whoId} whoName={this.state.whoName}/>
                <Nav />
                <div className="tab-content fill">
                     {listOfCats}
@@ -230,7 +232,7 @@ console.log(this.state.listOfEntries.length);
                         <div id="shoutbox-inner"> 
                             <div> {listOfShouts} </div> 
                         </div>
-                        <Shout handler= {this.handler.bind(this)} firebase={this.state.firebase} handle={this.state.handle} whoName={this.state.whoName} whoId={this.state.whoId}/>
+                        <Shout firebase={this.state.firebase} handle={this.state.handle} whoName={this.state.whoName} whoId={this.state.whoId}/>
                       </form>
                     </div>
                 </div>

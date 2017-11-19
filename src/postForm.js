@@ -20,8 +20,6 @@ class PosthtmlForm extends React.Component {
             heading: 'Type in your message below:'
         };
         this.handleInputChange = this.handleInputChange.bind(this);
-
-        //this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     activateField(event) {
@@ -66,27 +64,18 @@ class PosthtmlForm extends React.Component {
             let push = global.firebase.database().ref("/entries").push(data);
             console.log("Creating entry key: " + push.key);
             this.setState({heading: 'Your message has been sent, this window will now close.'});
-            //mb2.drawEntry(mb2.keyName, title, category, message, email, timestamp, mb2.whoId, mb2.whoName, handle);
-            //mb2.drawDeleteEntryButton();
             this.setState({ title: '', handle: '', message: '', message: '', email: '' });
             setTimeout(() => this.formReset(), 5000);
         } else
         {
-            //console.log(data);
-            //let push = global.firebase.database().ref("/entries").push(data);
-            console.log("captcha error");
-            this.setState({heading: 'Try again now'});
-            //mb2.drawEntry(mb2.keyName, title, category, message, email, timestamp, mb2.whoId, mb2.whoName, handle);
-            //mb2.drawDeleteEntryButton();
-            //this.setState({ title: '', handle: '', message: '', message: '', email: '' });
-            //setTimeout(() => this.formReset(), 5000);
+            console.log('captcha error');
+            this.setState({heading: 'Do the captcha and try again...'});
         }
         
     }
 
     formReset() {
-         //this.handleToggle();
-         this.props.handler(); 
+        this.props.handleToggle(); 
         global.grecaptcha.reset();
         this.setState({ title: '', handle: '', message: '', message: '', email: '' });
         this.setState({toggle: false});
@@ -95,15 +84,8 @@ class PosthtmlForm extends React.Component {
     }
 
     toggle() {
-
         return this.state.toggle ? 'block' : 'none';
     }
-
-    //  handleToggle() {
-    //     console.log('handleToggle')
-    //     this.props.handler();    
-    // }
-
 
     validate(...items) {
         items = items.map((item) => { return item !== undefined && item !== '' });
@@ -148,7 +130,6 @@ class PosthtmlForm extends React.Component {
     }
 
     render() {
-        //let handleToUpdate  =   this.props.handleToUpdate;
         const validated = this.validate(this.state.email, this.state.message, this.state.title, this.state.category);
         return (<div id="modal-input" className="modal" style={{display: this.toggle()}}>
                   <div className="modal-content">
