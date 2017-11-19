@@ -62,12 +62,12 @@ class App extends React.Component {
                         whoId: user.uid,
                         whoName: user.displayName
                     });
-                    let displayName = user.displayName;
-                    let uid = user.uid;
+                    //let displayName = global.firebase.auth().currentUser.displayName;
+                    //let uid = user.uid;
                     user.getIdToken().then((accessToken) => {
                         //document.querySelector("#contactForm p").textContent = "Adding entry as " + displayName + ", or specify below:";
                         this.setState({
-                            login: `Signed in as ${displayName}`
+                            login: `Signed in as ${this.state.whoName}`
                         });
                         //this.forceUpdate()
                     });
@@ -84,6 +84,7 @@ class App extends React.Component {
             }
 
         );
+
     };
 
     drawShouts() {
@@ -142,8 +143,13 @@ class App extends React.Component {
 
     componentWillMount() {
         console.log(`Starting app ${navigator.onLine ? `online` : `offline`}...`);
+        
     
         this.configBase();
+    }
+
+    componentWillUpdate() {
+      
     }
 
     componentDidMount() {
@@ -153,14 +159,22 @@ class App extends React.Component {
         this.drawEntries();
 console.log(this.state.listOfEntries.length);
         let startmodals = this.state.cats.map((nr, i) => stickyModals(nr));
+          if (this.state.whoName == 'anonymous') {
+            this.setState({
+                            login: `Signed in as ${this.state.whoName}`
+                        });
        
-    }
+    }}
 
     componentDidUpdate() {
-        document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
+        if (document.querySelectorAll(".shout:last-of-type").length > 0) {
+            document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
+        }
          //this.setState({ showForm: this.props.showForm })
         console.log('whoName:');
         console.log(this.state.whoName);
+        console.log('whoId:');
+        console.log(this.state.whoId);
 
     }
 
@@ -172,6 +186,8 @@ console.log(this.state.listOfEntries.length);
   }
 
     render() {
+
+
 
         drawDeleteEntryButton(this.state.whoId, this.state.whoName);
         let who = this.state.whoId;
@@ -236,9 +252,9 @@ console.log(this.state.listOfEntries.length);
                       </form>
                     </div>
                 </div>
-                <footer> Made by KR. </footer>
               </div>
             </div>
+             <footer> Made by KR. </footer>
           </div>);
     }
 }

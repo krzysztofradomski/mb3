@@ -393,6 +393,17 @@ input, textarea {
   width: 100%; 
 }
 
+#root .firebaseui-idp-list>.firebaseui-list-item {
+    display: inline;
+}
+
+#root .firebaseui-idp-list {
+    margin: 0.5em 0;
+}
+
+#root .firebaseui-container {
+    max-width: 500px;
+}
 
 /* Add Animation */
 @-webkit-keyframes animatetop {

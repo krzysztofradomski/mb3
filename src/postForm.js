@@ -17,6 +17,7 @@ class PosthtmlForm extends React.Component {
             handle: '',
             message: '',
             activeInput: null,
+            category: '',
             heading: 'Type in your message below:'
         };
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -33,6 +34,7 @@ class PosthtmlForm extends React.Component {
         this.activateField(event);
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
+        console.log(target.value)
         const name = target.name;
         this.setState({
             [name]: value
@@ -42,7 +44,7 @@ class PosthtmlForm extends React.Component {
     post() {
         let $ = global.jQuery;
         let title = this.state.title;
-        let category = $("#category").val();
+        let category =  this.state.category;
         let email = this.state.email;
         let message = this.state.message;
         let handle = this.state.handle;
@@ -64,7 +66,7 @@ class PosthtmlForm extends React.Component {
             let push = global.firebase.database().ref("/entries").push(data);
             console.log("Creating entry key: " + push.key);
             this.setState({heading: 'Your message has been sent, this window will now close.'});
-            this.setState({ title: '', handle: '', message: '', message: '', email: '' });
+            this.setState({ title: '', handle: '', message: '', category: '', email: '' });
             setTimeout(() => this.formReset(), 5000);
         } else
         {
@@ -77,7 +79,8 @@ class PosthtmlForm extends React.Component {
     formReset() {
         this.props.handleToggle(); 
         global.grecaptcha.reset();
-        this.setState({ title: '', handle: '', message: '', message: '', email: '' });
+        this.setState({ title: '', handle: '', message: '', category: '', email: '' });
+        //document.getElementById('category').value = '';
         this.setState({toggle: false});
         this.setState({heading: 'Type in your message below:'});
         this.clearValidationHighlight(this.state.activeInput);
@@ -159,8 +162,8 @@ class PosthtmlForm extends React.Component {
                                 <label htmlFor="category" className="control-label">Category</label>
                                 <div>
                                   
-                                  <select className="form-control required" id="category" name="category" required onChange={this.handleInputChange}>
-                                    <option value="">Choose category...</option>
+                                  <select value={this.state.category !== '' ? this.state.category : ''} className="form-control required" id="category" name="category" required onChange={this.handleInputChange}>
+                                    <option value=''>Choose category...</option>
                                     <option>Category 0</option>
                                     <option>Category 1</option>
                                     <option>Category 2</option>

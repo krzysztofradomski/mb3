@@ -1,4 +1,4 @@
-/* create buttons enabling user to delete own entries */
+
 function drawDeleteEntryButton(whoId, whoName) {
     let entries = [].slice.call(document.querySelectorAll('.modal'));
     for (let entry in entries) {
@@ -16,8 +16,13 @@ function drawDeleteEntryButton(whoId, whoName) {
        let modalId = this.parentNode.parentNode.parentNode.id;
         let entryId = this.parentNode.parentNode.parentNode.id.replace("modal-", "");
 
-            document.getElementById(modalId).remove();
-            document.getElementById(entryId).remove();
+        	if (modalId) {
+        		document.getElementById(modalId).remove();
+        	}
+            if (entryId) {
+            	document.getElementById(entryId).remove();
+            }
+            
         
         global.firebase.database().ref("/entries").once("value").then(function(snapshot) {
             let db = snapshot.val();
@@ -33,28 +38,7 @@ function drawDeleteEntryButton(whoId, whoName) {
         });
     });
 });
-    // document.querySelectorAll(".delete").on('click', function() {
-    //     let modalId = this.parentNode.parentNode.parentNode.id;
-    //     let entryId = this.parentNode.parentNode.parentNode.id.replace("modal-", "");
 
-    //     document.getElementById(entryId).remove();
-    //     this.parentNode.parentNode.parentNode.fadeOut(1000, function() {
-    //         document.getElementbyId(modalId).remove();
-    //     });
-    //     global.firebase.database().ref("/entries").once("value").then(function(snapshot) {
-    //         let db = snapshot.val();
-    //         db = db || [];
-    //         let keys = Object.keys(db);
-
-    //         for (let i = 0; i < keys.length; i++) {
-    //             if (db[keys[i]].whoId === whoId && db[keys[i]].whoName === whoName && keys[i] === entryId) {
-    //                 console.log("Removing entry by key equal to: " + keys[i]);
-    //                 global.firebase.database().ref("/entries").child(keys[i]).remove();
-    //             }
-    //         }
-    //     });
-
-    // });
 }
 
 export default drawDeleteEntryButton;
