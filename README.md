@@ -1,5 +1,5 @@
 # MB3
-React.js version of mb2 message board app. This is an online only application.
+React.js version of the [MB2](https://github.com/krzysztofradomski/mb2/) message board app. This is an online only application.
 
 > Check out the live demo: [MB3](https://krzysztofradomski.github.io/mb3/)
 
