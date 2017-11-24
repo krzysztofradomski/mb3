@@ -5,12 +5,12 @@ React.js version of mb2 message board app. This is an online only application.
 
 ## Features:
 * 4 categories for entries
-* entry validation
-* cloud database
-* realtime updates
-* user login
-* realtime chatbox
-* responsive layout
+* Entry validation
+* Cloud database
+* Realtime updates
+* User login
+* Realtime chatbox
+* Clean and responsive layout
 
 ## Frameworks and libraries:
 * React
@@ -23,6 +23,7 @@ React.js version of mb2 message board app. This is an online only application.
 * W3.org validators
 * PageSpeed Insights (91 mobile, 94 desktop)
 * JSHint
+* NPM
 * Git
 
 ## Credits:
