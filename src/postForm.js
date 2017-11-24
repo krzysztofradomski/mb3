@@ -80,7 +80,6 @@ class PosthtmlForm extends React.Component {
         this.props.handleToggle(); 
         global.grecaptcha.reset();
         this.setState({ title: '', handle: '', message: '', category: '', email: '' });
-        //document.getElementById('category').value = '';
         this.setState({toggle: false});
         this.setState({heading: 'Type in your message below:'});
         this.clearValidationHighlight(this.state.activeInput);

@@ -1,4 +1,4 @@
-function purgeOldDatabaseDataAndDrawNew(name, ref) {
+function purgeOldDatabaseDataAndDrawNew(name, ref, callback) {
     let deleted = 0;
     ref
         .once("value", (snap) => {

@@ -62,14 +62,10 @@ class App extends React.Component {
                         whoId: user.uid,
                         whoName: user.displayName
                     });
-                    //let displayName = global.firebase.auth().currentUser.displayName;
-                    //let uid = user.uid;
                     user.getIdToken().then((accessToken) => {
-                        //document.querySelector("#contactForm p").textContent = "Adding entry as " + displayName + ", or specify below:";
                         this.setState({
                             login: `Signed in as ${this.state.whoName}`
                         });
-                        //this.forceUpdate()
                     });
                 } else {
                     this.setState({
@@ -89,8 +85,8 @@ class App extends React.Component {
 
     drawShouts() {
         const rootRef = this.state.firebase.database().ref("/shoutbox").orderByChild("timestamp").limitToLast(10);
-        console.log('rootRef: ' + rootRef)
         rootRef.on("child_added", (snap) => {
+            this.hideLoader();
             const previousList = this.state.listOfShouts;
             previousList.push({
                 timestamp: snap.val().timestamp,
@@ -101,18 +97,17 @@ class App extends React.Component {
             this.setState({
                 listOfShouts: previousList
             });
-            console.log(`whoname: ${snap.val().whoName}, whoId: ${ snap.val().whoId}`);
+            //console.log(`whoname: ${snap.val().whoName}, whoId: ${ snap.val().whoId}`);
             console.log(`${this.state.listOfShouts.length === 10 ? `Shouts rendered in ${Date.now() - this.state.now} ms.` : `rendering...`}`);
-            this.setState({
-                loaded: true
-            });
-            //this.initLogin();
+            
         });
     }
 
     drawEntries() {
         const rootRef = this.state.firebase.database().ref().child("/entries").orderByChild("timestamp").limitToLast(50);
+        console.log('rootRef '  + rootRef.length);
         rootRef.on("child_added", (snap) => {
+            this.hideLoader();
             const previousList = this.state.listOfEntries;
             let entry = {
                 category: snap.val().category,
@@ -124,32 +119,22 @@ class App extends React.Component {
                 whoName: snap.val().whoName,
                 whoId: snap.val().whoId,
                 key: snap.V.path.o[1]
-            }
+            };
             previousList.push(entry);
             this.setState({
                 listOfEntries: previousList
             });
-            console.log(`whoname: ${snap.val().whoName}, whoId: ${ snap.val().whoId}`);
-            console.log(`${this.state.listOfEntries.length > 0 ? `Entries rendered in ${Date.now() - this.state.now} ms.` : `rendering...`}`);
-            this.setState({
-                loaded: true
-            });
-            drawEntry(this.state.expiration, entry);
-            
-        
-            //this.initLogin();
+            console.log(`${this.state.listOfEntries.length > 0 ? `Entries rendered in ${Date.now() - this.state.now} ms.` : `rendering...`}`); 
+            drawEntry(this.state.expiration, entry);   
         });
     }
 
     componentWillMount() {
-        console.log(`Starting app ${navigator.onLine ? `online` : `offline`}...`);
-        
-    
+        console.log(`Starting app ${navigator.onLine ? `online` : `offline`}...`);  
         this.configBase();
     }
 
     componentWillUpdate() {
-      
     }
 
     componentDidMount() {
@@ -157,38 +142,40 @@ class App extends React.Component {
         this.initLogin();
         this.drawShouts();
         this.drawEntries();
-console.log(this.state.listOfEntries.length);
         let startmodals = this.state.cats.map((nr, i) => stickyModals(nr));
-          if (this.state.whoName == 'anonymous') {
-            this.setState({
-                            login: `Signed in as ${this.state.whoName}`
-                        });
-       
-    }}
+        if (this.state.whoName == 'anonymous') {
+            this.setState({ 
+                login: `Signed in as ${this.state.whoName}`
+            });   
+        };
+ 
+        
+
+    }
 
     componentDidUpdate() {
         if (document.querySelectorAll(".shout:last-of-type").length > 0) {
             document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
         }
-         //this.setState({ showForm: this.props.showForm })
-        console.log('whoName:');
-        console.log(this.state.whoName);
-        console.log('whoId:');
-        console.log(this.state.whoId);
-
+        setTimeout(() => {if (document.querySelectorAll(".shout:last-of-type").length == 0) {
+             this.hideLoader();
+             console.log('fadsf')
+        }}, 1000);
     }
 
     handler() {
-  
-    this.setState({
-      showForm: false
-    })
-  }
+        this.setState({
+          showForm: false
+        });
+    }
+
+    hideLoader() {
+        this.setState({
+            loaded: true
+        });
+    }
 
     render() {
-
-
-
         drawDeleteEntryButton(this.state.whoId, this.state.whoName);
         let who = this.state.whoId;
         let float = (item) => { return who !== item.whoId ? 'right' : 'left' };
@@ -203,8 +190,6 @@ console.log(this.state.listOfEntries.length);
             </p>
           </div>
         );
-
-
 
         const listOfCats = this.state.cats.map((nr, i) =>
             <div id={"cat" + nr}  key={i} className="tab-pane fade">
@@ -248,7 +233,7 @@ console.log(this.state.listOfEntries.length);
                         <div id="shoutbox-inner"> 
                             <div> {listOfShouts} </div> 
                         </div>
-                        <Shout firebase={this.state.firebase} handle={this.state.handle} whoName={this.state.whoName} whoId={this.state.whoId}/>
+                        <Shout firebase={this.state.firebase} whoName={this.state.whoName} whoId={this.state.whoId}/>
                       </form>
                     </div>
                 </div>

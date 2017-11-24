@@ -25,17 +25,14 @@ class LogHere extends React.Component {
         if (
             this.state.whoName !== "anonymous"
         ) {
-            //document.querySelector("#contactForm p").textContent = "Adding entry as anonymous, or specify below:";
             let firebase = global.firebase;
             firebase.auth().signOut();
-            //wipedeleteEntryButton();
         }
     }
 
-    
-
     componentWillReceiveProps() {
         this.setState({ loaded: this.props.loaded });
+        //this.setState({ logged: this.props.logged });
     }
 
     render() {
@@ -43,8 +40,7 @@ class LogHere extends React.Component {
             <div>
                 <div id="firebaseui-auth-container" style={{display: this.state.displayStyle}}></div>
                 <div id="sign-in-status"> {this.props.who}</div> 
-                <div id="sign-in" onClick= {() => this.showLoginBox()}> {this.props.who === 'Signed out' ? 'Sign in' : 'Sign out'}</div>
-                
+                <div id="sign-in" onClick= {() => this.showLoginBox()}> {this.props.who === 'Signed out' ? 'Sign in' : 'Sign out'}</div>         
                 <div className="loader" style={{display: this.hideLoader()}} id="ldr" ></div>
 
             </div>
