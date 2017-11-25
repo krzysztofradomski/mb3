@@ -4,12 +4,13 @@ React.js version of the [mb2](https://github.com/krzysztofradomski/mb2/) message
 > Check out the live demo: [MB3](https://krzysztofradomski.github.io/mb3/)
 
 ## Features:
+* Cloud database
+* Realtime chatbox
+* Realtime board updates
+* User login
 * 4 categories for entries
 * Entry validation
-* Cloud database
-* Realtime updates
-* User login
-* Realtime chatbox
+* Entry removal for logged users
 * Clean and responsive layout
 
 ## Frameworks and libraries:

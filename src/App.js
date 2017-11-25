@@ -25,6 +25,7 @@ class App extends React.Component {
             now: Date.now(),
             expiration: 24,
             refShoutbox: "",
+            refEntries: "",
             keyName: "",
             firebase: global.firebase,
             firebaseui: global.firebaseui,
@@ -48,6 +49,13 @@ class App extends React.Component {
             refShoutbox: this.state.firebase
                 .database()
                 .ref("/shoutbox")
+                .orderByChild("timestamp")
+                .endAt(deadline)
+        });
+        this.setState({
+            refEntries: this.state.firebase
+                .database()
+                .ref("/entries")
                 .orderByChild("timestamp")
                 .endAt(deadline)
         });
@@ -123,7 +131,6 @@ class App extends React.Component {
             this.setState({
                 listOfEntries: previousList
             });
-            console.log(`${this.state.listOfEntries.length > 0 ? `Entries rendered in ${Date.now() - this.state.now} ms.` : `rendering...`}`); 
             drawEntry(this.state.expiration, entry);   
             drawDeleteEntryButton(this.state.whoId, this.state.whoName);
         });
@@ -139,6 +146,7 @@ class App extends React.Component {
 
     componentDidMount() {
         purgeOldDatabaseDataAndDrawNew("shoutbox", this.state.refShoutbox);
+        purgeOldDatabaseDataAndDrawNew("entries", this.state.refEntries);
         this.initLogin();
         this.drawShouts();
         this.drawEntries();
@@ -149,17 +157,21 @@ class App extends React.Component {
             });   
         };
         setTimeout(() => {
-
-             if (document.querySelectorAll(".shout").length === 0 && document.querySelectorAll('.board-item:not(.-sticky0):not(.-sticky1):not(.-sticky2):not(.-sticky3)') === 0) {
-             this.hideLoader();
-             alert("No data to show.")
-        }}, 1000);
+            if (document.querySelectorAll(".shout").length === 0 
+                && document.querySelectorAll('.board-item:not(.-sticky0):not(.-sticky1):not(.-sticky2):not(.-sticky3)').length === 0) {
+            alert("No data to show, the board is empty.");
+        }}, 1000)
     }
 
     componentDidUpdate() {
         if (document.querySelectorAll(".shout:last-of-type").length > 0) {
             document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
         }
+        setTimeout(() => {
+            if (document.querySelectorAll(".shout").length === 0 
+                && document.querySelectorAll('.board-item:not(.-sticky0):not(.-sticky1):not(.-sticky2):not(.-sticky3)').length === 0) {
+            this.hideLoader();
+        }}, 1000);
     }
 
     handler() {
