@@ -1,10 +1,11 @@
+/* create board item in the html */
 function drawEntry(expire, item) {
     /*console.log("drawing single entry " + key);*/
     let categoryZeroContainer = document.getElementById("cat0");
-    let categoryOneContainer = document.getElementById("cat1");
-    let categoryTwoContainer = document.getElementById("cat2");
-    let categoryThreeContainer = document.getElementById("cat3");
-    let shoutboxContainer = document.getElementById("shoutbox-inner");
+let categoryOneContainer = document.getElementById("cat1");
+let categoryTwoContainer = document.getElementById("cat2");
+let categoryThreeContainer = document.getElementById("cat3");
+let shoutboxContainer = document.getElementById("shoutbox-inner");
     let who = item.handle || item.whoName;
     let id = item.key;
     let modalId = "modal-" + item.key;
@@ -28,27 +29,28 @@ function drawEntry(expire, item) {
 
     switch (item.category) {
         case "Category 0":
-            categoryZeroContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + who + '</h4><p>' + item.message + '</p></div>' + modalContent);
+            categoryZeroContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + '</h4><p>' + item.message + '</p></div>' + modalContent);
             break;
         case "Category 1":
-            categoryOneContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + who + '</h4><p>' + item.message + '</p></div>' + modalContent);
+            categoryOneContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + '</h4><p>' + item.message + '</p></div>' + modalContent);
             break;
         case "Category 2":
-            categoryTwoContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + who + '</h4><p>' + item.message + '</p></div>' + modalContent);
+            categoryTwoContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + '</h4><p>' + item.message + '</p></div>' + modalContent);
             break;
         case "Category 3":
-            categoryThreeContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + who + '</h4><p>' + item.message + '</p></div>' + modalContent);
+            categoryThreeContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + '</h4><p>' + item.message + '</p></div>' + modalContent);
             break;
         default:
-            categoryZeroContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + " - " + who + '</h4><p>' + item.message + '</p></div>' + modalContent);
+            categoryZeroContainer.insertAdjacentHTML('beforeend', '<div data-cat="' + item.category + '" class="board-item ' + item.key + '" id="' + id + '"><h4>' + item.title + '</h4><p>' + item.message + '</p></div>' + modalContent);
             break;
     }
-
     let modal = document.getElementById(modalId);
     modal.style.display = "none";
 
     let btn = document.getElementById(id);
-    let root = document.getElementById('root');
+
+     let root = document.getElementById('root');
+
     let span = document.getElementById("close-" + modalId);
 
     btn.onclick = function() {
@@ -65,6 +67,7 @@ function drawEntry(expire, item) {
     	 window.event.target.id === modalId ?  modal.style.display = "none" : '';
       
     });
+
 
     return modalId;
 }

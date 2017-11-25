@@ -1,6 +1,6 @@
 import React from 'react';
 import Dotdotdot from 'react-dotdotdot';
-import './css/index.css';
+import './css/App.css';
 import Shout from './newShout';
 import LogHere from './logHere';
 import firebaseConfig from './firebase-helpers/firebaseConfig';
@@ -105,7 +105,6 @@ class App extends React.Component {
 
     drawEntries() {
         const rootRef = this.state.firebase.database().ref().child("/entries").orderByChild("timestamp").limitToLast(50);
-        console.log('rootRef '  + rootRef.length);
         rootRef.on("child_added", (snap) => {
             this.hideLoader();
             const previousList = this.state.listOfEntries;
@@ -148,18 +147,15 @@ class App extends React.Component {
                 login: `Signed in as ${this.state.whoName}`
             });   
         };
- 
-        
-
     }
 
     componentDidUpdate() {
         if (document.querySelectorAll(".shout:last-of-type").length > 0) {
             document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
         }
-        setTimeout(() => {if (document.querySelectorAll(".shout:last-of-type").length == 0) {
+        setTimeout(() => {if (document.querySelectorAll(".shout").length === 0 && document.querySelectorAll('.board-item:not(.-sticky0):not(.-sticky1):not(.-sticky2):not(.-sticky3)') === 0) {
              this.hideLoader();
-             console.log('fadsf')
+             alert("No data to show.")
         }}, 1000);
     }
 
@@ -180,19 +176,21 @@ class App extends React.Component {
         let who = this.state.whoId;
         let float = (item) => { return who !== item.whoId ? 'right' : 'left' };
         const listOfShouts = this.state.listOfShouts.map((item, i) =>
-            <div className="shout" style={{float: float(item)}} key={i}>
-           <h1> {item.shout} </h1>
-            <p>
-                {item.whoName}
-            </p>
-            <p style={{fontStyle: 'italic'}}>
-                {new Date(item.timestamp).toLocaleTimeString()} on {new Date(item.timestamp).toLocaleDateString()}
-            </p>
-          </div>
+            <div className="shout col border-dashed" style={{float: float(item)}} key={i}>
+                <p> 
+                    {item.shout} 
+                </p>
+                <p>
+                    {item.whoName}
+                </p>
+                <p>
+                    {new Date(item.timestamp).toLocaleTimeString()} on {new Date(item.timestamp).toLocaleDateString()}
+                </p>
+            </div>
         );
 
         const listOfCats = this.state.cats.map((nr, i) =>
-            <div id={"cat" + nr}  key={i} className="tab-pane fade">
+            <div id={"cat" + nr}  key={i} className="child-borders tab-pane fade">
             <div data-cat={"Category " + nr} className={"board-item -sticky"+ nr} id={"-sticky" + nr}>
                 <h4>Sticky - Admin</h4>      
                 <Dotdotdot className= "p-sticky" clamp={2 | String | 'auto'}>
@@ -230,8 +228,8 @@ class App extends React.Component {
                     {listOfCats}
                     <div id="shoutbox" className="tab-pane fade in active">
                       <form className="form-horizontal" id="shoutboxForm">
-                        <div id="shoutbox-inner"> 
-                            <div> {listOfShouts} </div> 
+                        <div className="col child-borders" id="shoutbox-inner"> 
+                            {listOfShouts}
                         </div>
                         <Shout firebase={this.state.firebase} whoName={this.state.whoName} whoId={this.state.whoId}/>
                       </form>
@@ -239,7 +237,6 @@ class App extends React.Component {
                 </div>
               </div>
             </div>
-             <footer> Made by KR. </footer>
           </div>);
     }
 }

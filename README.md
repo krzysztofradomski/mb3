@@ -14,6 +14,8 @@ React.js version of the [mb2](https://github.com/krzysztofradomski/mb2/) message
 
 ## Frameworks and libraries:
 * React
+* jQuery
+* Bootstrap
 * PaperCSS
 * Firebase
 
@@ -29,3 +31,4 @@ React.js version of the [mb2](https://github.com/krzysztofradomski/mb2/) message
 ## Credits:
 * Create React App by Facebook
 * React DotDotDot
+* PaperCSS

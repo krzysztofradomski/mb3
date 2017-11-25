@@ -16,13 +16,12 @@ function drawDeleteEntryButton(whoId, whoName) {
        let modalId = this.parentNode.parentNode.parentNode.id;
         let entryId = this.parentNode.parentNode.parentNode.id.replace("modal-", "");
 
+            // if (entryId) {
+            //     document.getElementById(entryId).remove();
+            // }
         	if (modalId) {
         		document.getElementById(modalId).remove();
-        	}
-            if (entryId) {
-            	document.getElementById(entryId).remove();
-            }
-            
+        	}        
         
         global.firebase.database().ref("/entries").once("value").then(function(snapshot) {
             let db = snapshot.val();

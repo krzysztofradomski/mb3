@@ -18,7 +18,8 @@ class PosthtmlForm extends React.Component {
             message: '',
             activeInput: null,
             category: '',
-            heading: 'Type in your message below:'
+            heading: 'Type in your message below:',
+            h3color: ''
         };
         this.handleInputChange = this.handleInputChange.bind(this);
     }
@@ -27,7 +28,9 @@ class PosthtmlForm extends React.Component {
         this.setState({
            activeInput: event.target
         });
-         event.target.style.border = `2px solid ${this.highlightValidation(event.target)}`;
+        if (event.target.id !== 'handle') {
+            event.target.style.border = `2px solid ${this.highlightValidation(event.target)}`;
+        }     
     }
 
     handleInputChange(event) {       
@@ -66,12 +69,14 @@ class PosthtmlForm extends React.Component {
             let push = global.firebase.database().ref("/entries").push(data);
             console.log("Creating entry key: " + push.key);
             this.setState({heading: 'Your message has been sent, this window will now close.'});
+            this.setState({h3color: 'green'});
             this.setState({ title: '', handle: '', message: '', category: '', email: '' });
             setTimeout(() => this.formReset(), 5000);
         } else
         {
             console.log('captcha error');
             this.setState({heading: 'Do the captcha and try again...'});
+            this.setState({h3color: 'red'});
         }
         
     }
@@ -83,6 +88,7 @@ class PosthtmlForm extends React.Component {
         this.setState({toggle: false});
         this.setState({heading: 'Type in your message below:'});
         this.clearValidationHighlight(this.state.activeInput);
+        this.setState({h3color: 'white'});
     }
 
     toggle() {
@@ -95,7 +101,6 @@ class PosthtmlForm extends React.Component {
         //let c = typeof global.grecaptcha !== 'undefined' ? global.grecaptcha.getResponse() : 'no captcha';
         //console.log(c);
         let v = email && items.reduce(function(a, b) { return a * b; });
-        console.log(v ? 'validated' : 'not validated');
         return v;
     }
 
@@ -117,7 +122,6 @@ class PosthtmlForm extends React.Component {
 
     componentWillReceiveProps(newProps) {
         this.setState({toggle: newProps.toggle });
-        console.log('newProps.toggle: ' + newProps.toggle)
         this.setState({whoName: newProps.whoName});
         this.setState({whoId: newProps.whoId});
         //global.grecaptcha.reset();
@@ -125,10 +129,7 @@ class PosthtmlForm extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-
-      console.log(prevState.activeInput == this.state.activeInput);
-       console.log('form component updated')
-      prevState.activeInput !== null && prevState.activeInput.id !== this.state.activeInput.id ? this.clearValidationHighlight(prevState.activeInput) : '';
+        prevState.activeInput !== null && prevState.activeInput.id !== this.state.activeInput.id ? this.clearValidationHighlight(prevState.activeInput) : '';
     }
 
     render() {
@@ -137,13 +138,10 @@ class PosthtmlForm extends React.Component {
                   <div className="modal-content">
                     <div className="modal-header">
                       <span id="closeAdd" className="close" onClick={() => {this.formReset()}}>&times;</span>
-                      <h2>{this.state.heading}</h2>
+                      <h3 style={{color: this.state.h3color}}>{this.state.heading}</h3>
                     </div>
                     <div className="modal-body">
                       <div id="contact">
-                        <div className="">
-                          <br/>
-                          <div className="">
                             <htmlForm className="htmlForm-horizontal" id="contactForm">
                               <p>Adding entry as {this.state.whoName}, or specify below:</p>
                               <div className="form-group">
@@ -179,16 +177,12 @@ class PosthtmlForm extends React.Component {
                                   <textarea className="htmlForm-control" rows="4" id="message" name="message" placeholder="your message" required  value={this.state.message}
             onChange={this.handleInputChange}></textarea>
                                 </div>
-                                <div className="">
-                                  <br/>
+                                <div className="">          
                                   <input className="g-recaptcha"
 data-sitekey="6LcPXjkUAAAAAPdWdVxs2b1tg6LBK8KYmKc1XqfD" id="submit" name="submit-form" type="submit" disabled={!validated} value="Send" onClick={()=>{this.post();}}/>
                                 </div>
                               </div>                        
                             </htmlForm>                   
-                            <br/>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
