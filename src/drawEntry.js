@@ -19,7 +19,7 @@ let shoutboxContainer = document.getElementById("shoutbox-inner");
         '<h2>' + item.title + '</h2>' +
         '</div>' +
         '<div class="modal-body">' +
-        '<p>' + item.message + '</p>' +
+        '<p >' + item.message + '</p>' +
         '</div>' +
         '<div class="modal-footer">' +
         '<p>' + who + ", " + item.email + '</p>' +

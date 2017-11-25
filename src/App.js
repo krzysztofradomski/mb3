@@ -125,6 +125,7 @@ class App extends React.Component {
             });
             console.log(`${this.state.listOfEntries.length > 0 ? `Entries rendered in ${Date.now() - this.state.now} ms.` : `rendering...`}`); 
             drawEntry(this.state.expiration, entry);   
+            drawDeleteEntryButton(this.state.whoId, this.state.whoName);
         });
     }
 
@@ -147,16 +148,18 @@ class App extends React.Component {
                 login: `Signed in as ${this.state.whoName}`
             });   
         };
+        setTimeout(() => {
+
+             if (document.querySelectorAll(".shout").length === 0 && document.querySelectorAll('.board-item:not(.-sticky0):not(.-sticky1):not(.-sticky2):not(.-sticky3)') === 0) {
+             this.hideLoader();
+             alert("No data to show.")
+        }}, 1000);
     }
 
     componentDidUpdate() {
         if (document.querySelectorAll(".shout:last-of-type").length > 0) {
             document.querySelectorAll(".shout:last-of-type")[0].scrollIntoView();
         }
-        setTimeout(() => {if (document.querySelectorAll(".shout").length === 0 && document.querySelectorAll('.board-item:not(.-sticky0):not(.-sticky1):not(.-sticky2):not(.-sticky3)') === 0) {
-             this.hideLoader();
-             alert("No data to show.")
-        }}, 1000);
     }
 
     handler() {
@@ -172,7 +175,7 @@ class App extends React.Component {
     }
 
     render() {
-        drawDeleteEntryButton(this.state.whoId, this.state.whoName);
+        //console.log(this.state.whoId, this.state.whoName)
         let who = this.state.whoId;
         let float = (item) => { return who !== item.whoId ? 'right' : 'left' };
         const listOfShouts = this.state.listOfShouts.map((item, i) =>
