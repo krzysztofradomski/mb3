@@ -53,8 +53,7 @@ p {
   color: black;
   position: relative;
   left: -120px;
-  top: -8px;
-  font-size: 3vw;
+  font-size: 1rem;
 }
 
 .loader {
