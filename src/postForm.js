@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import './css/App.css';
-
-const Captcha = require('react-captcha');  
 
 class PosthtmlForm extends React.Component {
 
@@ -37,7 +35,6 @@ class PosthtmlForm extends React.Component {
         this.activateField(event);
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
-        console.log(target.value)
         const name = target.name;
         this.setState({
             [name]: value
@@ -45,21 +42,13 @@ class PosthtmlForm extends React.Component {
     }
 
     post() {
-        let $ = global.jQuery;
-        let title = this.state.title;
-        let category =  this.state.category;
-        let email = this.state.email;
-        let message = this.state.message;
-        let handle = this.state.handle;
-        console.log(category + " " + email + " " + message);
-        let timestamp = Date.now();
-        let user = global.firebase.auth().currentUser;
+        //let user = global.firebase.auth().currentUser;
         let data = {
             title: this.state.title,
-            category: category,
+            category: this.state.category,
             message: this.state.message,
             email: this.state.email,
-            timestamp: timestamp,
+            timestamp: Date.now(),
             whoId: this.state.whoId,
             whoName: this.state.whoName,
             handle: this.state.handle
@@ -105,7 +94,7 @@ class PosthtmlForm extends React.Component {
     }
 
     highlightValidation(field) {
-        let email = field.type == 'email' ? field.value.match(/@+\w+\./gi) ? true : false : true;
+        let email = field.type === 'email' ? field.value.match(/@+\w+\./gi) ? true : false : true;
         return email && typeof field.value !== undefined && field.value !== '' ? 'green' : 'red';
     }
 

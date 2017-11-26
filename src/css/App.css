@@ -105,8 +105,9 @@ p {
   border: 2px solid #41403e;
 
 }
-  #shoutboxForm input, #shoutboxForm select, #shoutboxForm textarea {
+#shoutboxForm input, #shoutboxForm select, #shoutboxForm textarea {
   color: black;
+  font-size: 1rem;
 }
 
 .modal-footer p {
@@ -115,6 +116,11 @@ p {
 
 input, select {
   border: 1px solid #ccc;
+}
+
+.form-control, text-area {
+  font-size: 1rem;
+  color: black;
 }
 
 .shout {
@@ -425,6 +431,7 @@ footer {
 
 input, textarea {
   width: 100%; 
+  font-size: 1rem;
 }
 
 #submit {

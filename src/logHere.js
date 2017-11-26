@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './css/App.css';
-import PostForm from './postForm';
 
 
 class LogHere extends React.Component {

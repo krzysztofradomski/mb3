@@ -16,8 +16,7 @@ class Shout extends React.Component {
             default:
                 let firebase = this.props.firebase;
                 let shout = this.state.shout;
-                let handle = "anon";
-                let who = this.props.handle || this.props.whoName;
+                let handle = this.props.handle || this.props.whoName;
                 let timestamp = Date.now();
                 let whoId = this.props.whoId || "anonymous";
                 let whoName = this.props.whoName;

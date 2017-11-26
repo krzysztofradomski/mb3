@@ -2,10 +2,9 @@
 function drawEntry(expire, item) {
     /*console.log("drawing single entry " + key);*/
     let categoryZeroContainer = document.getElementById("cat0");
-let categoryOneContainer = document.getElementById("cat1");
-let categoryTwoContainer = document.getElementById("cat2");
-let categoryThreeContainer = document.getElementById("cat3");
-let shoutboxContainer = document.getElementById("shoutbox-inner");
+    let categoryOneContainer = document.getElementById("cat1");
+    let categoryTwoContainer = document.getElementById("cat2");
+    let categoryThreeContainer = document.getElementById("cat3");
     let who = item.handle || item.whoName;
     let id = item.key;
     let modalId = "modal-" + item.key;
@@ -65,10 +64,7 @@ let shoutboxContainer = document.getElementById("shoutbox-inner");
     };
     root.addEventListener("click", function() {
     	 window.event.target.id === modalId ?  modal.style.display = "none" : '';
-      
     });
-
-
     return modalId;
 }
 

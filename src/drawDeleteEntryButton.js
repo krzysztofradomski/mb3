@@ -1,7 +1,7 @@
 function drawDeleteEntryButton(whoId, whoName) {
     
     let entries = [].slice.call(document.querySelectorAll('.modal'));
-    entries.map(function(entry) {     
+    entries.map((entry) => {     
         if (entry.getAttribute('data-user-id') !== null && entry.getAttribute('data-user-name') !== null
             && 'anonymous' !== entry.getAttribute('data-user-id') && 'anonymous' !== entry.getAttribute('data-user-name') 
             && whoId === entry.getAttribute('data-user-id') && whoName === entry.getAttribute('data-user-name')) {

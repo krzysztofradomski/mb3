@@ -106,8 +106,7 @@ class App extends React.Component {
                 listOfShouts: previousList
             });
             //console.log(`whoname: ${snap.val().whoName}, whoId: ${ snap.val().whoId}`);
-            console.log(`${this.state.listOfShouts.length === 10 ? `Shouts rendered in ${Date.now() - this.state.now} ms.` : `rendering...`}`);
-            
+            //console.log(`${this.state.listOfShouts.length >= 10 ? `Shouts rendered in ${Date.now() - this.state.now} ms.` : `rendering...`}`);         
         });
     }
 
@@ -150,8 +149,8 @@ class App extends React.Component {
         this.initLogin();
         this.drawShouts();
         this.drawEntries();
-        let startmodals = this.state.cats.map((nr, i) => stickyModals(nr));
-        if (this.state.whoName == 'anonymous') {
+        this.state.cats.map((nr, i) => stickyModals(nr));
+        if (this.state.whoName === 'anonymous') {
             this.setState({ 
                 login: `Signed in as ${this.state.whoName}`
             });   
@@ -160,7 +159,7 @@ class App extends React.Component {
             if (document.querySelectorAll(".shout").length === 0 
                 && document.querySelectorAll('.board-item:not(.-sticky0):not(.-sticky1):not(.-sticky2):not(.-sticky3)').length === 0) {
             alert("No data to show, the board is empty.");
-        }}, 1000)
+        }}, 5000)
     }
 
     componentDidUpdate() {
@@ -171,7 +170,7 @@ class App extends React.Component {
             if (document.querySelectorAll(".shout").length === 0 
                 && document.querySelectorAll('.board-item:not(.-sticky0):not(.-sticky1):not(.-sticky2):not(.-sticky3)').length === 0) {
             this.hideLoader();
-        }}, 1000);
+        }}, 5000);
     }
 
     handler() {
